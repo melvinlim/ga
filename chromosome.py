@@ -28,7 +28,6 @@ class Chromosome(object):
 		for i in range(self.dnaLength):
 			tmp=dnaLib[random.randint(0,DNALIBLENGTH-1)]
 			dna.append(tmp)
-		#dna='x=obs[0]\ny=obs[1]\nz=x*y'
 		return dna
 	def transcribe(self):
 		rna=''
