@@ -4,8 +4,11 @@ class Organism(object):
 		self.chromosome=Chromosome()
 		self.chromosome.generate()
 	def step(self,obs):
-		dna=self.chromosome.dna
-		print dna
-		z=None
-		exec(dna)
-		return z
+		rna=self.chromosome.rna
+#		print rna
+		r0=None
+		try:
+			exec(rna)
+		except:
+			r0=None
+		return r0
