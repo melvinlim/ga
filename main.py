@@ -1,3 +1,3 @@
 from organism import Organism
 o=Organism()
-print o.step(1234)
+print o.step([2,3])
