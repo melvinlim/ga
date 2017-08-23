@@ -18,18 +18,24 @@ for i in range(REGISTERS):
 			rnaLib['RX OP RX'].append('r'+str(i)+operator[k]+'r'+str(j))
 class Chromosome(object):
 	random.seed(time.time())
-	def __init__(self,length=10):
+	def __init__(self,dna=None,length=10):
 		self.dnaLength=length
-		self.dna=self.generate()
+		if dna==None:
+			self.dna=self.generate()
+		else:
+			self.dna=dna
 		self.rna=self.transcribe()
 		self.rnaLength=len(self.rna)
-	def generate(self):
+	def epigenetic(self,obs):
+		self.dna=self.generate(obs)
+		self.rna=self.transcribe(obs)
+	def generate(self,obs=None):
 		dna=[]
 		for i in range(self.dnaLength):
 			tmp=dnaLib[random.randint(0,DNALIBLENGTH-1)]
 			dna.append(tmp)
 		return dna
-	def transcribe(self):
+	def transcribe(self,obs=None):
 		rna=''
 		for bp in self.dna:
 			tmp=rnaLib[bp]

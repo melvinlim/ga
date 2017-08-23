@@ -1,8 +1,7 @@
 from chromosome import Chromosome
 class Organism(object):
-	def __init__(self):
-		self.chromosome=Chromosome()
-		self.chromosome.generate()
+	def __init__(self,dna=None):
+		self.chromosome=Chromosome(dna)
 	def step(self,obs):
 		rna=self.chromosome.rna
 #		print rna
