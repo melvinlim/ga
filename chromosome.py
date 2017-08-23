@@ -26,20 +26,34 @@ class Chromosome(object):
 			self.dna=dna
 		self.rna=self.transcribe()
 		self.rnaLength=len(self.rna)
+		self.dnaLength=self.rnaLength
 	def epigenetic(self,obs):
 		self.dna=self.generate(obs)
 		self.rna=self.transcribe(obs)
-	def generate(self,obs=None):
-		dna=[]
+	def genFunc(self,obs=None):
+		tmp=[]
 		for i in range(self.dnaLength):
-			tmp=dnaLib[random.randint(0,DNALIBLENGTH-1)]
-			dna.append(tmp)
-		return dna
-	def transcribe(self,obs=None):
-		rna=''
-		for bp in self.dna:
+			instruction=dnaLib[random.randint(0,DNALIBLENGTH-1)]
+			tmp.append(instruction)
+		func=''
+		for bp in tmp:
 			tmp=rnaLib[bp]
 			randint=random.randint(0,len(tmp)-1)
 			tmp=tmp[randint]
-			rna+=tmp+'\n'
+			func+=tmp+'\n'
+		return func
+	def generate(self,obs=None):
+		self.functions=[]
+		dna=self.genFunc()
+		return dna
+	def transcribe(self,obs=None):
+		rna=self.dna
 		return rna
+	def execute(self,obs):
+		rna=self.rna
+		r0=None
+		try:
+			exec(rna)
+		except:
+			r0=None
+		return r0
