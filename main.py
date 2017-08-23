@@ -1,6 +1,7 @@
 import random
-TIME=10
+TIME=10000
 CAPACITY=100	#maintain this many organisms.
+REPLACEMENTS=20
 from organism import Organism
 from environment import Environment
 organisms=[]
@@ -19,7 +20,7 @@ for t in range(TIME):
 		response=organisms[i].step(obs)
 		if response:
 			#print str(t)+':'+str(response)
-			fitness=abs(response-desired_response)
+			fitness=abs(response-desired_response)+len(organisms[i].chromosome.rna)*1
 		else:
 			fitness=9999999999
 			#fitness=None
@@ -28,9 +29,9 @@ for t in range(TIME):
 	rankings.sort()
 	print rankings[:3]
 	nextOrganisms=[]
-	for i in range(CAPACITY-5):
+	for i in range(CAPACITY-REPLACEMENTS):
 		nextOrganisms.append(rankings[i][1])
-	for i in range(0,10,2):
+	for i in range(0,(2*REPLACEMENTS),2):
 		nextOrganisms.append(env.crossOrganisms(rankings[i][1],rankings[i][1]))
 	organisms=nextOrganisms
 #	print organisms
