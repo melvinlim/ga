@@ -15,10 +15,12 @@ def concatInstructions(x,y):
 #function 0 is the main function.  for now x and y are the same length.
 def concatDNA(x,y):
 	assert(len(x)==len(y))
-	n=len(x)
-	result=[]
+	result={}
+	result['main']=concatInstructions(x['main'],y['main'])
+	n=len(x['misc'])
+	result['misc']=[]
 	for i in xrange(n):
-		result.append(concatInstructions(x[i],y[i]))
+		result['misc'].append(concatInstructions(x['misc'][i],y['misc'][i]))
 	return result
 class Environment(object):
 	def __init__(self):
