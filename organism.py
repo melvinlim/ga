@@ -6,3 +6,5 @@ class Organism(object):
 		return self.chromosome.rna
 	def step(self,obs):
 		return self.chromosome.execute(obs)
+	def assign(self,fitness):
+		self.fitness=fitness

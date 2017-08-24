@@ -1,7 +1,7 @@
 import random
 import time
 REGISTERS=4	#number of registers.
-OBSERVATIONS=2	#length of observation vector.
+OBSERVATIONS=3	#length of observation vector.
 operators=['+=','-=','*=','/=']
 instructionsTable=[]
 for i in range(REGISTERS):
@@ -14,6 +14,9 @@ for i in range(REGISTERS):
 	for j in range(REGISTERS):
 		for operator in operators:
 			instructionsTable.append('r'+str(i)+operator+'r'+str(j))
+PREFIX=''
+for i in range(REGISTERS):
+	PREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
 LUTLENGTH=len(instructionsTable)
 class Chromosome(object):
 	random.seed(time.time())
@@ -40,6 +43,7 @@ class Chromosome(object):
 		self.dna=self.genFunc()
 	def generateInstructions(self,obs=None):
 		ans=''
+		ans+=PREFIX
 		for instruction in self.dna:
 			ans+=instruction+'\n'
 		self.rna=ans
