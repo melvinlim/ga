@@ -17,9 +17,29 @@ for i in range(REGISTERS):
 FUNCTIONPREFIX=''
 for i in range(REGISTERS):
 	FUNCTIONPREFIX+='\tr'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
-PREFIX=''
+import types
+typesList=dir(types)
+toBeRemoved=[]
+for t in typesList:
+	if t[0]=='_':
+		toBeRemoved.append(t)
+for t in toBeRemoved:
+	typesList.remove(t)
+typesList=['ListType','StringType']
+print typesList
+MAINPREFIX='obsType=type(obs)\n'
+i=0
+#for type in typesList:
+#	if i>0:
+#		MAINPREFIX+='el'
+	#MAINPREFIX+=' obsType==type('+type+'):\n\thandle'+type+'()\n'
+#	MAINPREFIX+='if obsType==type("'+type+'"):\n\tr0=f'+str(i)+'()\n'
+#	i+=1
 for i in range(REGISTERS):
-	PREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
+#for i in range(1,REGISTERS):
+	MAINPREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
+#print MAINPREFIX
+#assert(False)
 LUTLENGTH=len(instructionsTable)
 class Chromosome(object):
 	random.seed(time.time())
@@ -74,7 +94,7 @@ class Chromosome(object):
 				ans+='\t'+instruction+'\n'
 			ans+='\treturn r0\n'
 			i+=1
-		ans+=PREFIX
+		ans+=MAINPREFIX
 		main=self.functions[0]
 		for instruction in main:
 			ans+=instruction+'\n'
