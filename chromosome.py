@@ -28,10 +28,24 @@ class Chromosome(object):
 			self.functions=functions
 		self.functionsLength=len(self.functions)
 		self.generateInstructions()
+		print self.rna
 		self.rnaLength=len(self.rna)
 #	def epigenetic(self,obs):
 #		self.functions=self.generateFunctionList(obs)
 #		self.rna=self.generateInstructions(obs)
+	def genMainFunc(self,obs=None):
+		self.mainFunctionLength=10
+		n=len(self.functionNames)
+		mainInstructionsTable=[]
+		for i in range(n):
+			for j in range(REGISTERS):
+				mainInstructionsTable.append('r'+str(j)+'='+self.functionNames[i]+'(obs)')
+		MLUTLENGTH=len(mainInstructionsTable)
+		func=[]
+		for i in range(self.mainFunctionLength):
+			tmp=mainInstructionsTable[random.randint(0,MLUTLENGTH-1)]
+			func.append(tmp)
+		return func
 	def genFunc(self,obs=None):
 		func=[]
 		for i in range(self.functionLength):
@@ -39,12 +53,22 @@ class Chromosome(object):
 			func.append(tmp)
 		return func
 	def generateFunctionList(self,obs=None):
+		FUNCTIONS=2
+		self.functionNames=[]
+		for i in range(FUNCTIONS):
+			self.functionNames.append('f'+str(i))
 		self.functions=[]
-		self.functions.append(self.genFunc())
+		for i in range(FUNCTIONS):
+			self.functions.append(self.genFunc())
+		self.functions.append(self.genMainFunc())
 	def generateInstructions(self,obs=None):
 		ans=''
+		i=0
 		for function in self.functions[1:]:
-			pass
+			ans+='def f'+str(i)+'(obs):\n'
+			for instruction in function:
+				ans+='\t'+instruction+'\n'
+			ans+='\treturn r0\n'
 		ans+=PREFIX
 		main=self.functions[0]
 		for instruction in main:
