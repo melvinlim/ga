@@ -14,6 +14,9 @@ for i in range(REGISTERS):
 	for j in range(REGISTERS):
 		for operator in operators:
 			instructionsTable.append('r'+str(i)+operator+'r'+str(j))
+FUNCTIONPREFIX=''
+for i in range(REGISTERS):
+	FUNCTIONPREFIX+='\tr'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
 PREFIX=''
 for i in range(REGISTERS):
 	PREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
@@ -58,17 +61,19 @@ class Chromosome(object):
 		for i in range(FUNCTIONS):
 			self.functionNames.append('f'+str(i))
 		self.functions=[]
+		self.functions.append(self.genMainFunc())
 		for i in range(FUNCTIONS):
 			self.functions.append(self.genFunc())
-		self.functions.append(self.genMainFunc())
 	def generateInstructions(self,obs=None):
 		ans=''
 		i=0
 		for function in self.functions[1:]:
 			ans+='def f'+str(i)+'(obs):\n'
+			ans+=FUNCTIONPREFIX
 			for instruction in function:
 				ans+='\t'+instruction+'\n'
 			ans+='\treturn r0\n'
+			i+=1
 		ans+=PREFIX
 		main=self.functions[0]
 		for instruction in main:
