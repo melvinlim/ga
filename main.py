@@ -6,10 +6,10 @@ from organism import Organism
 from environment import Environment
 organisms=[]
 env=Environment()
-for n in range(CAPACITY):
+for n in xrange(CAPACITY):
 	o=Organism()
 	organisms.append(o)
-for t in range(TIME):
+for t in xrange(TIME):
 	rankings=[]
 	x=random.randint(0,1000)
 	y=random.randint(0,1000)
@@ -33,7 +33,7 @@ for t in range(TIME):
 		rankings.append([fitness,organism])
 	rankings.sort()
 #	print rankings[-1][1].step(obs),desired_response
-	for i in range(REPLACEMENTS):
+	for i in xrange(REPLACEMENTS):
 		[x,y,z]=random.sample(xrange(0,CAPACITY),3)
 		if organisms[x].fitness>=organisms[y].fitness:
 			if organisms[y].fitness>=organisms[z].fitness:

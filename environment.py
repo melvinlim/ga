@@ -17,7 +17,7 @@ def concatDNA(x,y):
 	assert(len(x)==len(y))
 	n=len(x)
 	result=[]
-	for i in range(n):
+	for i in xrange(n):
 		result.append(concatInstructions(x[i],y[i]))
 	return result
 class Environment(object):

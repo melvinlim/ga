@@ -4,18 +4,18 @@ REGISTERS=4	#number of registers.
 OBSERVATIONS=3	#length of observation vector.
 operators=['+=','-=','*=','/=']
 instructionsTable=[]
-for i in range(REGISTERS):
-	for j in range(REGISTERS):
+for i in xrange(REGISTERS):
+	for j in xrange(REGISTERS):
 		instructionsTable.append('r'+str(i)+'='+'r'+str(j))
-for i in range(REGISTERS):
-	for j in range(OBSERVATIONS):
+for i in xrange(REGISTERS):
+	for j in xrange(OBSERVATIONS):
 		instructionsTable.append('r'+str(i)+'='+'obs['+str(j)+']')
-for i in range(REGISTERS):
-	for j in range(REGISTERS):
+for i in xrange(REGISTERS):
+	for j in xrange(REGISTERS):
 		for operator in operators:
 			instructionsTable.append('r'+str(i)+operator+'r'+str(j))
 FUNCTIONPREFIX=''
-for i in range(REGISTERS):
+for i in xrange(REGISTERS):
 	FUNCTIONPREFIX+='\tr'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
 import types
 typesList=dir(types)
@@ -35,8 +35,8 @@ i=0
 	#MAINPREFIX+=' obsType==type('+type+'):\n\thandle'+type+'()\n'
 #	MAINPREFIX+='if obsType==type("'+type+'"):\n\tr0=f'+str(i)+'()\n'
 #	i+=1
-for i in range(REGISTERS):
-#for i in range(1,REGISTERS):
+for i in xrange(REGISTERS):
+#for i in xrange(1,REGISTERS):
 	MAINPREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
 #print MAINPREFIX
 #assert(False)
@@ -60,29 +60,29 @@ class Chromosome(object):
 		self.mainFunctionLength=10
 		n=len(self.functionNames)
 		mainInstructionsTable=[]
-		for i in range(n):
-			for j in range(REGISTERS):
+		for i in xrange(n):
+			for j in xrange(REGISTERS):
 				mainInstructionsTable.append('r'+str(j)+'='+self.functionNames[i]+'(obs)')
 		MLUTLENGTH=len(mainInstructionsTable)
 		func=[]
-		for i in range(self.mainFunctionLength):
+		for i in xrange(self.mainFunctionLength):
 			tmp=mainInstructionsTable[random.randint(0,MLUTLENGTH-1)]
 			func.append(tmp)
 		return func
 	def genFunc(self,obs=None):
 		func=[]
-		for i in range(self.functionLength):
+		for i in xrange(self.functionLength):
 			tmp=instructionsTable[random.randint(0,LUTLENGTH-1)]
 			func.append(tmp)
 		return func
 	def generateFunctionList(self,obs=None):
 		FUNCTIONS=2
 		self.functionNames=[]
-		for i in range(FUNCTIONS):
+		for i in xrange(FUNCTIONS):
 			self.functionNames.append('f'+str(i))
 		self.functions=[]
 		self.functions.append(self.genMainFunc())
-		for i in range(FUNCTIONS):
+		for i in xrange(FUNCTIONS):
 			self.functions.append(self.genFunc())
 	def generateInstructions(self,obs=None):
 		ans=''
