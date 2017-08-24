@@ -1,7 +1,7 @@
 from chromosome import Chromosome
 class Organism(object):
-	def __init__(self,dna=None):
-		self.chromosome=Chromosome(dna)
+	def __init__(self,functions=None):
+		self.chromosome=Chromosome(functions)
 	def peek(self):
 		return self.chromosome.rna
 	def step(self,obs):

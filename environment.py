@@ -6,11 +6,20 @@ def heads():
 	if randint(0,1):
 		return True
 	return False
-def concatDNA(x,y):
+def concatInstructions(x,y):
 	xt=randint(1,len(x))
 	yt=randint(0,len(y)-1)
 	c=x[:xt]+y[yt:]
 	return c
+#x and y are lists of functions.  functions are lists of instructions.
+#function 0 is the main function.  for now x and y are the same length.
+def concatDNA(x,y):
+	assert(len(x)==len(y))
+	n=len(x)
+	result=[]
+	for i in range(n):
+		result.append(concatInstructions(x[i],y[i]))
+	return result
 class Environment(object):
 	def __init__(self):
 		self.contents=[]
@@ -22,7 +31,7 @@ class Environment(object):
 		else:
 			return concatDNA(y,x)
 	def crossOrganisms(self,a,b):
-		x=a.chromosome.dna
-		y=b.chromosome.dna
+		x=a.chromosome.functions
+		y=b.chromosome.functions
 		c=self.crossDNA(x,y)
 		return Organism(c)
