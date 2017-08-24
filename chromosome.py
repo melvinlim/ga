@@ -1,21 +1,20 @@
 import random
 import time
-operator=['=','+=','-=','*=','/=']
-OPERATORS=len(operator)
-OBSERVATIONS=2	#length of observation vector.
 REGISTERS=4	#number of registers.
-dnaLib=['RX = OBS','RX OP RX']
-DNALIBLENGTH=len(dnaLib)
-rnaLib={}
-for bp in dnaLib:
-	rnaLib[bp]=[]
-for i in range(REGISTERS):
-	for j in range(OBSERVATIONS):
-		rnaLib['RX = OBS'].append('r'+str(i)+'='+'obs['+str(j)+']')
+OBSERVATIONS=2	#length of observation vector.
+operators=['+=','-=','*=','/=']
+instructionsLUT=[]
 for i in range(REGISTERS):
 	for j in range(REGISTERS):
-		for k in range(OPERATORS):
-			rnaLib['RX OP RX'].append('r'+str(i)+operator[k]+'r'+str(j))
+		instructionsLUT.append('r'+str(i)+'='+'r'+str(j))
+for i in range(REGISTERS):
+	for j in range(OBSERVATIONS):
+		instructionsLUT.append('r'+str(i)+'='+'obs['+str(j)+']')
+for i in range(REGISTERS):
+	for j in range(REGISTERS):
+		for operator in operators:
+			instructionsLUT.append('r'+str(i)+operator+'r'+str(j))
+LUTLENGTH=len(instructionsLUT)
 class Chromosome(object):
 	random.seed(time.time())
 	def __init__(self,dna=None,length=10):
@@ -31,15 +30,9 @@ class Chromosome(object):
 #		self.dna=self.generateFunctionList(obs)
 #		self.rna=self.generateInstructions(obs)
 	def genFunc(self,obs=None):
-		tmp=[]
-		for i in range(self.dnaLength):
-			instruction=dnaLib[random.randint(0,DNALIBLENGTH-1)]
-			tmp.append(instruction)
 		func=[]
-		for bp in tmp:
-			tmp=rnaLib[bp]
-			randint=random.randint(0,len(tmp)-1)
-			tmp=tmp[randint]
+		for i in range(self.dnaLength):
+			tmp=instructionsLUT[random.randint(0,LUTLENGTH-1)]
 			func.append(tmp)
 		return func
 	def generateFunctionList(self,obs=None):
