@@ -16,23 +16,23 @@ for t in range(TIME):
 	z=random.randint(0,1000)
 	obs=[x,y,z]
 	desired_response=x*y+z
-	for i in range(len(organisms)):
-		response=organisms[i].step(obs)
+	for organism in organisms:
+		response=organism.step(obs)
 		if response:
 			try:
 				error=response-desired_response
 			except:
 				fitness=0
 			#print str(t)+':'+str(response)
-			fitness=abs(error)+len(organisms[i].chromosome.rna)*1
+			fitness=abs(error)+len(organism.chromosome.rna)*1
 			fitness=1.0/(fitness+1.0)
 		else:
 			fitness=0
-		organisms[i].assign(fitness)
+		organism.assign(fitness)
 			#fitness=None
-		rankings.append([fitness,organisms[i]])
+		rankings.append([fitness,organism])
 	rankings.sort()
-	print rankings[:3]
+#	print rankings[-1][1].step(obs),desired_response
 	for i in range(REPLACEMENTS):
 		[x,y,z]=random.sample(xrange(0,CAPACITY),3)
 		if organisms[x].fitness>=organisms[y].fitness:
