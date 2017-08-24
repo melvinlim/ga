@@ -24,9 +24,9 @@ class Chromosome(object):
 			self.generateFunctionList()
 		else:
 			self.dna=dna
+		self.dnaLength=len(self.dna)
 		self.generateInstructions()
 		self.rnaLength=len(self.rna)
-		self.dnaLength=self.rnaLength
 #	def epigenetic(self,obs):
 #		self.dna=self.generateFunctionList(obs)
 #		self.rna=self.generateInstructions(obs)
@@ -35,18 +35,21 @@ class Chromosome(object):
 		for i in range(self.dnaLength):
 			instruction=dnaLib[random.randint(0,DNALIBLENGTH-1)]
 			tmp.append(instruction)
-		func=''
+		func=[]
 		for bp in tmp:
 			tmp=rnaLib[bp]
 			randint=random.randint(0,len(tmp)-1)
 			tmp=tmp[randint]
-			func+=tmp+'\n'
+			func.append(tmp)
 		return func
 	def generateFunctionList(self,obs=None):
 		self.functions=[]
 		self.dna=self.genFunc()
 	def generateInstructions(self,obs=None):
-		self.rna=self.dna
+		ans=''
+		for instruction in self.dna:
+			ans+=instruction+'\n'
+		self.rna=ans
 	def execute(self,obs):
 		rna=self.rna
 		r0=None

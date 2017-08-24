@@ -6,7 +6,7 @@ def heads():
 	if randint(0,1):
 		return True
 	return False
-def concat(x,y):
+def concatDNA(x,y):
 	xt=randint(1,len(x))
 	yt=randint(0,len(y)-1)
 	c=x[:xt]+y[yt:]
@@ -18,9 +18,9 @@ class Environment(object):
 		self.contents.append(x)
 	def crossDNA(self,x,y):
 		if heads():
-			return concat(x,y)
+			return concatDNA(x,y)
 		else:
-			return concat(y,x)
+			return concatDNA(y,x)
 	def crossOrganisms(self,a,b):
 		x=a.chromosome.dna
 		y=b.chromosome.dna

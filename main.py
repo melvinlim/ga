@@ -1,6 +1,6 @@
 import random
 FAIL=99999999999
-TIME=100
+TIME=1000
 CAPACITY=100	#maintain this many organisms.
 REPLACEMENTS=5
 from organism import Organism
