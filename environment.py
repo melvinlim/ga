@@ -21,6 +21,10 @@ def concatDNA(x,y):
 	result['misc']=[]
 	for i in xrange(n):
 		result['misc'].append(concatInstructions(x['misc'][i],y['misc'][i]))
+	result['input']={}
+	keys=x['input'].keys()
+	for key in keys:
+		result['input'][key]=concatInstructions(x['input'][key],y['input'][key])
 	return result
 class Environment(object):
 	def __init__(self):

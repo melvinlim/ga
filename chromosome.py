@@ -2,7 +2,8 @@ import random
 import time
 REGISTERS=4	#number of registers.
 OBSERVATIONS=3	#length of observation vector.
-operators=['+=','-=','*=','/=']
+#operators=['+=','-=','*=','/=']
+operators=['+=','-=','*=']
 instructionsTable=[]
 for i in xrange(REGISTERS):
 	for j in xrange(REGISTERS):
@@ -25,19 +26,20 @@ for t in typesList:
 		toBeRemoved.append(t)
 for t in toBeRemoved:
 	typesList.remove(t)
-typesList=['ListType','StringType']
-print typesList
+typesDict={}
+typesDict['ListType']='[1,2,3]'
+typesDict['StringType']='"abc"'
+handleTypeNames=[]
 MAINPREFIX='obsType=type(obs)\n'
 i=0
-#for type in typesList:
-#	if i>0:
-#		MAINPREFIX+='el'
-	#MAINPREFIX+=' obsType==type('+type+'):\n\thandle'+type+'()\n'
-#	MAINPREFIX+='if obsType==type("'+type+'"):\n\tr0=f'+str(i)+'()\n'
-#	i+=1
-for i in xrange(REGISTERS):
+for type in typesDict:
+	if i>0:
+		MAINPREFIX+='el'
+	handleTypeNames.append('handle'+type)
+	MAINPREFIX+='if obsType==type('+typesDict[type]+'):\n\tr0=handle'+type+'(obs)\n'
+	i+=1
 #for i in xrange(1,REGISTERS):
-	MAINPREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
+#	MAINPREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
 #print MAINPREFIX
 #assert(False)
 LUTLENGTH=len(instructionsTable)
@@ -56,7 +58,8 @@ class Chromosome(object):
 #	def epigenetic(self,obs):
 #		self.functions=self.generateFunctionDict(obs)
 #		self.rna=self.generateInstructions(obs)
-	def genMainFunc(self,obs=None):
+	#def genMainFunc(self,obs=None):
+	def genInputFunc(self,obs=None):
 		self.mainFunctionLength=10
 		n=len(self.functionNames)
 		mainInstructionsTable=[]
@@ -81,10 +84,14 @@ class Chromosome(object):
 		for i in xrange(FUNCTIONS):
 			self.functionNames.append('f'+str(i))
 		self.functions={}
-		self.functions['main']=self.genMainFunc()
+#		self.functions['main']=self.genMainFunc()
+		self.functions['main']=self.genInputFunc()
 		self.functions['misc']=[]
+		self.functions['input']={}
 		for i in xrange(FUNCTIONS):
 			self.functions['misc'].append(self.genFunc())
+		for name in handleTypeNames:
+			self.functions['input'][name]=self.genInputFunc()
 	def generateInstructions(self,obs=None):
 		ans=''
 		i=0
@@ -95,10 +102,15 @@ class Chromosome(object):
 				ans+='\t'+instruction+'\n'
 			ans+='\treturn r0\n'
 			i+=1
+		for function in self.functions['input']:
+			ans+='def '+function+'(obs):\n'
+			for instruction in self.functions['input'][function]:
+				ans+='\t'+instruction+'\n'
+			ans+='\treturn r0\n'
 		ans+=MAINPREFIX
-		main=self.functions['main']
-		for instruction in main:
-			ans+=instruction+'\n'
+		#main=self.functions['main']
+		#for instruction in main:
+		#	ans+=instruction+'\n'
 		self.rna=ans
 	def execute(self,obs):
 		rna=self.rna

@@ -1,5 +1,5 @@
 import random
-TIME=100
+TIME=1000
 CAPACITY=200	#maintain this many organisms.
 REPLACEMENTS=20
 from organism import Organism
