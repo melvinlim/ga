@@ -21,15 +21,15 @@ class Chromosome(object):
 	def __init__(self,dna=None,length=10):
 		self.dnaLength=length
 		if dna==None:
-			self.dna=self.generate()
+			self.generateFunctionList()
 		else:
 			self.dna=dna
-		self.rna=self.transcribe()
+		self.generateInstructions()
 		self.rnaLength=len(self.rna)
 		self.dnaLength=self.rnaLength
-	def epigenetic(self,obs):
-		self.dna=self.generate(obs)
-		self.rna=self.transcribe(obs)
+#	def epigenetic(self,obs):
+#		self.dna=self.generateFunctionList(obs)
+#		self.rna=self.generateInstructions(obs)
 	def genFunc(self,obs=None):
 		tmp=[]
 		for i in range(self.dnaLength):
@@ -42,13 +42,11 @@ class Chromosome(object):
 			tmp=tmp[randint]
 			func+=tmp+'\n'
 		return func
-	def generate(self,obs=None):
+	def generateFunctionList(self,obs=None):
 		self.functions=[]
-		dna=self.genFunc()
-		return dna
-	def transcribe(self,obs=None):
-		rna=self.dna
-		return rna
+		self.dna=self.genFunc()
+	def generateInstructions(self,obs=None):
+		self.rna=self.dna
 	def execute(self,obs):
 		rna=self.rna
 		r0=None
