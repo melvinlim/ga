@@ -3,18 +3,18 @@ import time
 REGISTERS=4	#number of registers.
 OBSERVATIONS=2	#length of observation vector.
 operators=['+=','-=','*=','/=']
-instructionsLUT=[]
+instructionsTable=[]
 for i in range(REGISTERS):
 	for j in range(REGISTERS):
-		instructionsLUT.append('r'+str(i)+'='+'r'+str(j))
+		instructionsTable.append('r'+str(i)+'='+'r'+str(j))
 for i in range(REGISTERS):
 	for j in range(OBSERVATIONS):
-		instructionsLUT.append('r'+str(i)+'='+'obs['+str(j)+']')
+		instructionsTable.append('r'+str(i)+'='+'obs['+str(j)+']')
 for i in range(REGISTERS):
 	for j in range(REGISTERS):
 		for operator in operators:
-			instructionsLUT.append('r'+str(i)+operator+'r'+str(j))
-LUTLENGTH=len(instructionsLUT)
+			instructionsTable.append('r'+str(i)+operator+'r'+str(j))
+LUTLENGTH=len(instructionsTable)
 class Chromosome(object):
 	random.seed(time.time())
 	def __init__(self,dna=None,length=10):
@@ -32,7 +32,7 @@ class Chromosome(object):
 	def genFunc(self,obs=None):
 		func=[]
 		for i in range(self.dnaLength):
-			tmp=instructionsLUT[random.randint(0,LUTLENGTH-1)]
+			tmp=instructionsTable[random.randint(0,LUTLENGTH-1)]
 			func.append(tmp)
 		return func
 	def generateFunctionList(self,obs=None):
