@@ -3,13 +3,13 @@ import sys
 import time
 import types
 DEBUG=True
-#DEBUG=False
+DEBUG=False
 class Chromosome(object):
 	random.seed(time.time())
 	def __init__(self,tables,functions=None,functionLength=10):
 		self.tables=tables
 		self.functionLength=functionLength
-		self.myList=[0]*self.tables.REGISTERS
+		self.myList=[0]*self.tables.MYLISTLENGTH
 		if functions==None:
 			self.generateFunctionDict()
 		else:
@@ -80,7 +80,7 @@ class Chromosome(object):
 		rna=self.rna
 		r0=None
 		try:
-			self.myList=[0]*self.tables.REGISTERS
+			self.myList=[0]*self.tables.MYLISTLENGTH
 			r0=self.go(self,obs)
 			#r0=self.myList[0]
 			try:
