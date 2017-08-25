@@ -1,5 +1,5 @@
 import random
-TIME=1000
+TIME=200
 CAPACITY=200	#maintain this many organisms.
 REPLACEMENTS=20
 from organism import Organism
@@ -50,3 +50,5 @@ for t in xrange(TIME):
 			organisms[x].assign(0)
 				
 #	print organisms
+print rankings[-1]
+b=rankings[-1][1]

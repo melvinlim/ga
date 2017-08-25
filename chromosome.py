@@ -7,7 +7,8 @@ operators=['+=','-=','*=']
 instructionsTable=[]
 for i in xrange(REGISTERS):
 	for j in xrange(REGISTERS):
-		instructionsTable.append('r'+str(i)+'='+'r'+str(j))
+		if i!=j:
+			instructionsTable.append('r'+str(i)+'='+'r'+str(j))
 for i in xrange(REGISTERS):
 	for j in xrange(OBSERVATIONS):
 		instructionsTable.append('r'+str(i)+'='+'obs['+str(j)+']')
@@ -31,13 +32,13 @@ typesDict['ListType']='[1,2,3]'
 typesDict['StringType']='"abc"'
 handleTypeNames=[]
 MAINPREFIX='obsType=type(obs)\n'
-i=0
-for type in typesDict:
-	if i>0:
-		MAINPREFIX+='el'
-	handleTypeNames.append('handle'+type)
-	MAINPREFIX+='if obsType==type('+typesDict[type]+'):\n\tr0=handle'+type+'(obs)\n'
-	i+=1
+#i=0
+#for type in typesDict:
+#	if i>0:
+#		MAINPREFIX+='el'
+#	handleTypeNames.append('handle'+type)
+#	MAINPREFIX+='if obsType==type('+typesDict[type]+'):\n\tr0=handle'+type+'(obs)\n'
+#	i+=1
 #for i in xrange(1,REGISTERS):
 #	MAINPREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
 #print MAINPREFIX
@@ -108,9 +109,9 @@ class Chromosome(object):
 				ans+='\t'+instruction+'\n'
 			ans+='\treturn r0\n'
 		ans+=MAINPREFIX
-		#main=self.functions['main']
-		#for instruction in main:
-		#	ans+=instruction+'\n'
+		main=self.functions['main']
+		for instruction in main:
+			ans+=instruction+'\n'
 		self.rna=ans
 	def execute(self,obs):
 		rna=self.rna
