@@ -9,7 +9,7 @@ from environment import Environment
 organisms=[]
 env=Environment()
 for n in xrange(CAPACITY):
-	o=Organism()
+	o=Organism(tables=env.table)
 	organisms.append(o)
 for t in xrange(TIME):
 	rankings=[]

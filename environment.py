@@ -1,5 +1,6 @@
 import random
 from organism import *
+import tablegen
 def randint(a,b):
 	return random.randint(a,b)
 def heads():
@@ -29,6 +30,7 @@ def concatDNA(x,y):
 class Environment(object):
 	def __init__(self):
 		self.contents=[]
+		self.table=tablegen.Table()
 	def add(self,x):
 		self.contents.append(x)
 	def crossDNA(self,x,y):
@@ -40,4 +42,4 @@ class Environment(object):
 		x=a.chromosome.functions
 		y=b.chromosome.functions
 		c=self.crossDNA(x,y)
-		return Organism(c)
+		return Organism(tables=self.table,functions=c)
