@@ -50,6 +50,7 @@ class Chromosome(object):
 			self.functions['input'][name]=self.genInputFunc()
 	def generateInstructions(self,obs=None):
 		totalInstructionLength=0
+		self.rna=[]
 		ans=''
 		i=0
 		for function in self.functions['misc']:
@@ -61,8 +62,9 @@ class Chromosome(object):
 			#ans+='self.f'+str(i)+'=types.MethodType(f'+str(i)+',self)\n'
 			ans+='self.f'+str(i)+'=f'+str(i)+'\n'
 			exec(ans)
+			totalInstructionLength+=len(ans)
+			self.rna.append(ans)
 			i+=1
-		totalInstructionLength+=len(ans)
 		for function in self.functions['input']:
 			ans='def '+function+'(self,obs):\n'
 			for instruction in self.functions['input'][function]:
@@ -71,7 +73,8 @@ class Chromosome(object):
 			#ans+='self.'+function+'=types.MethodType('+function+',self)\n'
 			ans+='self.'+function+'='+function+'\n'
 			exec(ans)
-		totalInstructionLength+=len(ans)
+			totalInstructionLength+=len(ans)
+			self.rna.append(ans)
 		ans='def go(self,obs):\n'
 		ans+=self.tables.FUNCTIONPREFIX
 		main=self.functions['main']
@@ -82,10 +85,9 @@ class Chromosome(object):
 		ans+='self.go=go\n'
 		exec(ans)
 		totalInstructionLength+=len(ans)
-		self.rna=ans
+		self.rna.append(ans)
 		self.rnaLength=totalInstructionLength
 	def execute(self,obs):
-		rna=self.rna
 		r0=None
 		try:
 			self.myList=[0]*self.tables.MYLISTLENGTH
@@ -97,7 +99,6 @@ class Chromosome(object):
 				if DEBUG:
 					print 'r0 assigned huge number'
 				r0=None
-			#exec(rna)
 		except:
 			if DEBUG:
 				print self.rna
