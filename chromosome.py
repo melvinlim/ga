@@ -33,7 +33,7 @@ class Chromosome(object):
 			tmp=self.tables.mainInstructionsTable[random.randint(0,self.tables.MLUTLENGTH-1)]
 			func.append(tmp)
 		return func
-	def genFunc(self,obs=None):
+	def genMiscFunc(self,obs=None):
 		func=[]
 		for i in xrange(self.functionLength):
 			tmp=self.tables.instructionsTable[random.randint(0,self.tables.LUTLENGTH-1)]
@@ -45,7 +45,7 @@ class Chromosome(object):
 		self.functions['misc']=[]
 		self.functions['input']={}
 		for i in xrange(self.tables.FUNCTIONS):
-			self.functions['misc'].append(self.genFunc())
+			self.functions['misc'].append(self.genMiscFunc())
 		for name in self.tables.handleTypeNames:
 			self.functions['input'][name]=self.genInputFunc()
 	def generateInstructions(self,obs=None):
@@ -67,6 +67,7 @@ class Chromosome(object):
 			i+=1
 		for function in self.functions['input']:
 			ans='def '+function+'(self,obs):\n'
+			ans+=self.tables.FUNCTIONPREFIX
 			for instruction in self.functions['input'][function]:
 				ans+='\t'+instruction+'\n'
 			ans+='\treturn r0\n'
