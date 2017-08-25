@@ -8,8 +8,13 @@ def heads():
 		return True
 	return False
 def concatInstructions(x,y):
-	xt=randint(1,len(x))
-	yt=randint(0,len(y)-1)
+	#these force c to be atleast 2 instructions in size.
+	#xt=randint(1,len(x))
+	#yt=randint(0,len(y)-1)
+
+	#these allow c to be an empty array.
+	xt=randint(0,len(x))
+	yt=randint(0,len(y))
 	c=x[:xt]+y[yt:]
 	return c
 #x and y are lists of functions.  functions are lists of instructions.
