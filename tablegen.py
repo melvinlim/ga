@@ -4,8 +4,8 @@ class Table(object):
 	def __init__(self):
 		self.REGISTERS=4	#number of registers.
 		OBSERVATIONS=3	#length of observation vector.
-		operators=['+=','-=','*=','/=']
-		#operators=['+=','-=','*=']
+		#operators=['+=','-=','*=','/=']
+		operators=['+=','-=','*=']
 		self.instructionsTable=[]
 		for i in xrange(self.REGISTERS):
 			for j in xrange(self.REGISTERS):
@@ -37,8 +37,8 @@ class Table(object):
 			if i>0:
 				self.MAINPREFIX+='el'
 			self.handleTypeNames.append('handle'+theType)
-#			self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=handle'+theType+'(obs)\n'
-			self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=f1(obs)\n'
+			self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=self.handle'+theType+'(obs)\n'
+#			self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=f1(obs)\n'
 			i+=1
 		#for i in xrange(1,self.REGISTERS):
 		#	self.MAINPREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'

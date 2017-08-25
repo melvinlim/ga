@@ -27,7 +27,7 @@ class Chromosome(object):
 		mainInstructionsTable=[]
 		for i in xrange(n):
 			for j in xrange(self.tables.REGISTERS):
-				mainInstructionsTable.append('r'+str(j)+'='+self.functionNames[i]+'(obs)')
+				mainInstructionsTable.append('r'+str(j)+'=self.'+self.functionNames[i]+'(obs)')
 		MLUTLENGTH=len(mainInstructionsTable)
 		func=[]
 		for i in xrange(self.mainFunctionLength):
@@ -58,27 +58,39 @@ class Chromosome(object):
 		ans=''
 		i=0
 		for function in self.functions['misc']:
-			ans+='def f'+str(i)+'(obs):\n'
+			ans='def f'+str(i)+'(obs):\n'
 			ans+=self.tables.FUNCTIONPREFIX
 			for instruction in function:
 				ans+='\t'+instruction+'\n'
 			ans+='\treturn r0\n'
+			#ans+='self.f'+str(i)+'=types.MethodType(f'+str(i)+',self)\n'
+			ans+='self.f'+str(i)+'=f'+str(i)+'\n'
+			exec(ans)
 			i+=1
 		for function in self.functions['input']:
-			ans+='def '+function+'(obs):\n'
+			ans='def '+function+'(obs):\n'
 			for instruction in self.functions['input'][function]:
 				ans+='\t'+instruction+'\n'
 			ans+='\treturn r0\n'
-		ans+=self.tables.MAINPREFIX
+			#ans+='self.'+function+'=types.MethodType('+function+',self)\n'
+			ans+='self.'+function+'='+function+'\n'
+			exec(ans)
+		ans='def go(self,obs):\n'
+		ans+=self.tables.FUNCTIONPREFIX
 		main=self.functions['main']
 		for instruction in main:
-			ans+=instruction+'\n'
+			ans+='\t'+instruction+'\n'
+		#ans+='self.go=types.MethodType(go,self)\n'
+		ans+='\treturn r0\n'
+		ans+='self.go=go\n'
+		exec(ans)
 		self.rna=ans
 	def execute(self,obs):
 		rna=self.rna
 		r0=None
 		try:
-			exec(rna)
+			r0=self.go(self,obs)
+			#exec(rna)
 		except:
 			if DEBUG:
 				print self.rna
