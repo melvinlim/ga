@@ -16,8 +16,6 @@ class Chromosome(object):
 			self.functions=functions
 		self.functionsLength=len(self.functions)
 		self.generateInstructions()
-		#print self.rna
-		self.rnaLength=len(self.rna)
 #	def epigenetic(self,obs):
 #		self.functions=self.generateFunctionDict(obs)
 #		self.rna=self.generateInstructions(obs)
@@ -51,7 +49,7 @@ class Chromosome(object):
 		for name in self.tables.handleTypeNames:
 			self.functions['input'][name]=self.genInputFunc()
 	def generateInstructions(self,obs=None):
-		til=0
+		totalInstructionLength=0
 		ans=''
 		i=0
 		for function in self.functions['misc']:
@@ -64,7 +62,7 @@ class Chromosome(object):
 			ans+='self.f'+str(i)+'=f'+str(i)+'\n'
 			exec(ans)
 			i+=1
-		til+=len(ans)
+		totalInstructionLength+=len(ans)
 		for function in self.functions['input']:
 			ans='def '+function+'(self,obs):\n'
 			for instruction in self.functions['input'][function]:
@@ -73,7 +71,7 @@ class Chromosome(object):
 			#ans+='self.'+function+'=types.MethodType('+function+',self)\n'
 			ans+='self.'+function+'='+function+'\n'
 			exec(ans)
-		til+=len(ans)
+		totalInstructionLength+=len(ans)
 		ans='def go(self,obs):\n'
 		ans+=self.tables.FUNCTIONPREFIX
 		main=self.functions['main']
@@ -83,9 +81,9 @@ class Chromosome(object):
 		ans+='\treturn r0\n'
 		ans+='self.go=go\n'
 		exec(ans)
-		til+=len(ans)
+		totalInstructionLength+=len(ans)
 		self.rna=ans
-		self.rnaLength=til
+		self.rnaLength=totalInstructionLength
 	def execute(self,obs):
 		rna=self.rna
 		r0=None
