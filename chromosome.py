@@ -2,6 +2,7 @@ import random
 import sys
 import time
 DEBUG=True
+DEBUG=False
 REGISTERS=4	#number of registers.
 OBSERVATIONS=3	#length of observation vector.
 operators=['+=','-=','*=','/=']
@@ -34,10 +35,10 @@ handleTypeNames=[]
 MAINPREFIX='obsType=type(obs)\n'
 i=0
 for theType in typesList:
-	if i>0:
-		MAINPREFIX+='el'
+#	if i>0:
+#		MAINPREFIX+='el'
 	handleTypeNames.append('handle'+theType)
-	MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=handle'+theType+'(obs)\n'
+#	MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=handle'+theType+'(obs)\n'
 	i+=1
 #for i in xrange(1,REGISTERS):
 #	MAINPREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
