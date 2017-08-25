@@ -23,15 +23,9 @@ class Chromosome(object):
 	#def genMainFunc(self,obs=None):
 	def genInputFunc(self,obs=None):
 		self.mainFunctionLength=10
-		n=len(self.functionNames)
-		mainInstructionsTable=[]
-		for i in xrange(n):
-			for j in xrange(self.tables.REGISTERS):
-				mainInstructionsTable.append('r'+str(j)+'=self.'+self.functionNames[i]+'(obs)')
-		MLUTLENGTH=len(mainInstructionsTable)
 		func=[]
 		for i in xrange(self.mainFunctionLength):
-			tmp=mainInstructionsTable[random.randint(0,MLUTLENGTH-1)]
+			tmp=self.tables.mainInstructionsTable[random.randint(0,self.tables.MLUTLENGTH-1)]
 			func.append(tmp)
 		return func
 	def genFunc(self,obs=None):
@@ -41,16 +35,12 @@ class Chromosome(object):
 			func.append(tmp)
 		return func
 	def generateFunctionDict(self,obs=None):
-		FUNCTIONS=2
-		self.functionNames=[]
-		for i in xrange(FUNCTIONS):
-			self.functionNames.append('f'+str(i))
 		self.functions={}
 #		self.functions['main']=self.genMainFunc()
 		self.functions['main']=self.genInputFunc()
 		self.functions['misc']=[]
 		self.functions['input']={}
-		for i in xrange(FUNCTIONS):
+		for i in xrange(self.tables.FUNCTIONS):
 			self.functions['misc'].append(self.genFunc())
 		for name in self.tables.handleTypeNames:
 			self.functions['input'][name]=self.genInputFunc()

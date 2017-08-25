@@ -51,3 +51,5 @@ for t in xrange(TIME):
 #	print organisms
 print rankings[-1]
 b=rankings[-1][1]
+print b.step(obs)
+print desired_response

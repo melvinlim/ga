@@ -46,4 +46,14 @@ class Table(object):
 		#	self.MAINPREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
 		#print self.MAINPREFIX
 		#assert(False)
+		self.FUNCTIONS=2
+		self.functionNames=[]
+		for i in range(2):
+			self.functionNames.append('f'+str(i))
+		n=self.FUNCTIONS
+		self.mainInstructionsTable=[]
+		for i in xrange(n):
+			for j in xrange(self.REGISTERS):
+				self.mainInstructionsTable.append('r'+str(j)+'=self.'+self.functionNames[i]+'(obs)')
 		self.LUTLENGTH=len(self.instructionsTable)
+		self.MLUTLENGTH=len(self.mainInstructionsTable)
