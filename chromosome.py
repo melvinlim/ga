@@ -9,6 +9,7 @@ class Chromosome(object):
 	def __init__(self,tables,functions=None,functionLength=10):
 		self.tables=tables
 		self.functionLength=functionLength
+		self.myList=[0]*self.tables.REGISTERS
 		if functions==None:
 			self.generateFunctionDict()
 		else:
@@ -79,7 +80,15 @@ class Chromosome(object):
 		rna=self.rna
 		r0=None
 		try:
+			self.myList=[0]*self.tables.REGISTERS
 			r0=self.go(self,obs)
+			#r0=self.myList[0]
+			try:
+				r0=float(r0)
+			except:
+				if DEBUG:
+					print 'r0 assigned huge number'
+				r0=None
 			#exec(rna)
 		except:
 			if DEBUG:

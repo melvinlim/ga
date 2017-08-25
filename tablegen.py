@@ -8,16 +8,19 @@ class Table(object):
 		operators=['+=','-=','*=']
 		self.instructionsTable=[]
 		for i in xrange(self.REGISTERS):
-			self.instructionsTable.append('r'+str(i)+'='+'len(obs)')
+			self.instructionsTable.append('self.myList['+str(i)+']='+'len(obs)')
 		for i in xrange(self.REGISTERS):
 			for j in xrange(self.REGISTERS):
+				self.instructionsTable.append('self.myList['+str(i)+']='+'obs[self.myList['+str(j)+']%len(obs)]')
 				self.instructionsTable.append('r'+str(i)+'='+'obs[r'+str(j)+'%len(obs)]')
 				if i!=j:
+					self.instructionsTable.append('self.myList['+str(i)+']='+'self.myList['+str(j)+']')
 					self.instructionsTable.append('r'+str(i)+'='+'r'+str(j))
 		for i in xrange(self.REGISTERS):
 			for j in xrange(self.REGISTERS):
 				for operator in operators:
 					self.instructionsTable.append('r'+str(i)+operator+'r'+str(j))
+#					self.instructionsTable.append('self.myList['+str(i)+']'+operator+'self.myList['+str(j)+']')
 		self.FUNCTIONPREFIX=''
 		for i in xrange(self.REGISTERS):
 			self.FUNCTIONPREFIX+='\tr'+str(i)+'=0\n'
