@@ -22,9 +22,8 @@ for t in xrange(TIME):
 		response=organism.step(obs)
 		if response:
 			error=response-desired_response
-			#print str(t)+':'+str(response)
-			fitness=abs(error)
-			fitness=1.0/(fitness+10.0-(len(organism.chromosome.rna)*0.1))
+			lengthPenalty=len(organism.chromosome.rna)*1
+			fitness=1.0/(abs(error)+10.0+lengthPenalty)
 		else:
 			fitness=0
 		organism.assign(fitness)
