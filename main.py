@@ -1,4 +1,6 @@
 import random
+import types
+import sys
 TIME=200
 CAPACITY=200	#maintain this many organisms.
 REPLACEMENTS=20

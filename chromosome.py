@@ -1,9 +1,11 @@
 import random
+import sys
 import time
+DEBUG=True
 REGISTERS=4	#number of registers.
 OBSERVATIONS=3	#length of observation vector.
-#operators=['+=','-=','*=','/=']
-operators=['+=','-=','*=']
+operators=['+=','-=','*=','/=']
+#operators=['+=','-=','*=']
 instructionsTable=[]
 for i in xrange(REGISTERS):
 	for j in xrange(REGISTERS):
@@ -32,13 +34,13 @@ typesDict['ListType']='[1,2,3]'
 typesDict['StringType']='"abc"'
 handleTypeNames=[]
 MAINPREFIX='obsType=type(obs)\n'
-#i=0
-#for type in typesDict:
-#	if i>0:
-#		MAINPREFIX+='el'
-#	handleTypeNames.append('handle'+type)
-#	MAINPREFIX+='if obsType==type('+typesDict[type]+'):\n\tr0=handle'+type+'(obs)\n'
-#	i+=1
+i=0
+for type in typesDict:
+	if i>0:
+		MAINPREFIX+='el'
+	handleTypeNames.append('handle'+type)
+	MAINPREFIX+='if obsType==type('+typesDict[type]+'):\n\tr0=handle'+type+'(obs)\n'
+	i+=1
 #for i in xrange(1,REGISTERS):
 #	MAINPREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
 #print MAINPREFIX
@@ -54,7 +56,7 @@ class Chromosome(object):
 			self.functions=functions
 		self.functionsLength=len(self.functions)
 		self.generateInstructions()
-		print self.rna
+		#print self.rna
 		self.rnaLength=len(self.rna)
 #	def epigenetic(self,obs):
 #		self.functions=self.generateFunctionDict(obs)
@@ -119,5 +121,9 @@ class Chromosome(object):
 		try:
 			exec(rna)
 		except:
+			if DEBUG:
+				print self.rna
+				print "Unexpected error:", sys.exc_info()
+				time.sleep(1)
 			r0=None
 		return r0
