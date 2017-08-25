@@ -23,11 +23,13 @@ class Table(object):
 				for operator in operators:
 					self.instructionsTable.append('r'+str(i)+operator+'r'+str(j))
 					#self.instructionsTable.append('self.myList['+str(i)+']'+operator+'self.myList['+str(j)+']')
-		self.FUNCTIONPREFIX=''
+		self.FUNCTIONPREFIX='\t'
 		for i in xrange(self.REGISTERS):
-			self.FUNCTIONPREFIX+='\tr'+str(i)+'=0\n'
+			self.FUNCTIONPREFIX+='r'+str(i)+'='
+		self.FUNCTIONPREFIX+='0\n'
+#		for i in xrange(self.REGISTERS):
 #			self.FUNCTIONPREFIX+='\tr'+str(i)+'=len(obs)\n'
-			#self.FUNCTIONPREFIX+='\tr'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
+#			self.FUNCTIONPREFIX+='\tr'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
 		import types
 		typesList=dir(types)
 		toBeRemoved=[]
