@@ -39,7 +39,7 @@ class Table(object):
 			if i>0:
 				self.MAINPREFIX+='el'
 			self.handleTypeNames.append('handle'+theType)
-			self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=self.handle'+theType+'(obs)\n'
+			self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=self.handle'+theType+'(self,obs)\n'
 #			self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=f1(obs)\n'
 			i+=1
 		#for i in xrange(1,self.REGISTERS):
@@ -54,6 +54,6 @@ class Table(object):
 		self.mainInstructionsTable=[]
 		for i in xrange(n):
 			for j in xrange(self.REGISTERS):
-				self.mainInstructionsTable.append('r'+str(j)+'=self.'+self.functionNames[i]+'(obs)')
+				self.mainInstructionsTable.append('r'+str(j)+'=self.'+self.functionNames[i]+'(self,obs)')
 		self.LUTLENGTH=len(self.instructionsTable)
 		self.MLUTLENGTH=len(self.mainInstructionsTable)

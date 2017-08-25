@@ -48,7 +48,7 @@ class Chromosome(object):
 		ans=''
 		i=0
 		for function in self.functions['misc']:
-			ans='def f'+str(i)+'(obs):\n'
+			ans='def f'+str(i)+'(self,obs):\n'
 			ans+=self.tables.FUNCTIONPREFIX
 			for instruction in function:
 				ans+='\t'+instruction+'\n'
@@ -58,7 +58,7 @@ class Chromosome(object):
 			exec(ans)
 			i+=1
 		for function in self.functions['input']:
-			ans='def '+function+'(obs):\n'
+			ans='def '+function+'(self,obs):\n'
 			for instruction in self.functions['input'][function]:
 				ans+='\t'+instruction+'\n'
 			ans+='\treturn r0\n'
