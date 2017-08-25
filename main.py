@@ -22,7 +22,7 @@ for t in xrange(TIME):
 		response=organism.step(obs)
 		if response:
 			error=response-desired_response
-			lengthPenalty=len(organism.chromosome.rna)*1
+			lengthPenalty=organism.chromosome.rnaLength*1
 			fitness=1.0/(abs(error)+10.0+lengthPenalty)
 		else:
 			fitness=0
