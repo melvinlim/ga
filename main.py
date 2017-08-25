@@ -4,6 +4,7 @@ import sys
 TIME=200
 CAPACITY=200	#maintain this many organisms.
 REPLACEMENTS=20
+MAXFITNESS=1.0
 from organism import Organism
 from environment import Environment
 organisms=[]
@@ -23,7 +24,7 @@ for t in xrange(TIME):
 		if response:
 			error=response-desired_response
 			lengthPenalty=organism.chromosome.rnaLength*1
-			fitness=1.0/(abs(error)+10.0+lengthPenalty)
+			fitness=1.0/(abs(error)+1.0+lengthPenalty)
 		else:
 			fitness=0
 		organism.assign(fitness)
@@ -36,16 +37,16 @@ for t in xrange(TIME):
 		if organisms[x].fitness>=organisms[y].fitness:
 			if organisms[y].fitness>=organisms[z].fitness:
 				organisms[z]=env.crossOrganisms(organisms[x],organisms[y])
-				organisms[z].assign(0)
+				organisms[z].assign(MAXFITNESS)
 			else:
 				organisms[y]=env.crossOrganisms(organisms[x],organisms[z])
-				organisms[y].assign(0)
+				organisms[y].assign(MAXFITNESS)
 		elif organisms[x].fitness>=organisms[z].fitness:
 			organisms[z]=env.crossOrganisms(organisms[x],organisms[y])
-			organisms[z].assign(0)
+			organisms[z].assign(MAXFITNESS)
 		else:
 			organisms[x]=env.crossOrganisms(organisms[y],organisms[z])
-			organisms[x].assign(0)
+			organisms[x].assign(MAXFITNESS)
 				
 #	print organisms
 print rankings[-1]
