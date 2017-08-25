@@ -19,10 +19,7 @@ for t in xrange(TIME):
 	for organism in organisms:
 		response=organism.step(obs)
 		if response:
-			try:
-				error=response-desired_response
-			except:
-				fitness=0
+			error=response-desired_response
 			#print str(t)+':'+str(response)
 			fitness=abs(error)+len(organism.chromosome.rna)*1
 			fitness=1.0/(fitness+1.0)
