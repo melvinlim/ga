@@ -1,6 +1,7 @@
 import random
 import sys
 import time
+import types
 DEBUG=True
 DEBUG=False
 class Chromosome(object):

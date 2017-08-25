@@ -34,10 +34,11 @@ class Table(object):
 		self.MAINPREFIX='obsType=type(obs)\n'
 		i=0
 		for theType in typesList:
-		#	if i>0:
-		#		self.MAINPREFIX+='el'
+			if i>0:
+				self.MAINPREFIX+='el'
 			self.handleTypeNames.append('handle'+theType)
-		#	self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=handle'+theType+'(obs)\n'
+#			self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=handle'+theType+'(obs)\n'
+			self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=f1(obs)\n'
 			i+=1
 		#for i in xrange(1,self.REGISTERS):
 		#	self.MAINPREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
