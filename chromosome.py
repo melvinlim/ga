@@ -3,7 +3,7 @@ import sys
 import time
 import types
 DEBUG=True
-DEBUG=False
+#DEBUG=False
 class Chromosome(object):
 	random.seed(time.time())
 	def __init__(self,tables,functions=None,functionLength=10):
