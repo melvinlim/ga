@@ -22,6 +22,7 @@ class Table(object):
 				self.instructionsTable.append('r'+str(i)+'='+'obs[int(r'+str(j)+'%len(obs))]')
 				for operator in operators:
 					self.instructionsTable.append('r'+str(i)+operator+'r'+str(j))
+					#self.instructionsTable.append('self.myList['+str(i)+']'+operator+'self.myList['+str(j)+']')
 		self.FUNCTIONPREFIX=''
 		for i in xrange(self.REGISTERS):
 			self.FUNCTIONPREFIX+='\tr'+str(i)+'=0\n'
