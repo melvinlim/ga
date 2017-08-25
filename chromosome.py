@@ -35,11 +35,11 @@ typesDict['StringType']='"abc"'
 handleTypeNames=[]
 MAINPREFIX='obsType=type(obs)\n'
 i=0
-for type in typesDict:
+for theType in typesDict:
 	if i>0:
 		MAINPREFIX+='el'
-	handleTypeNames.append('handle'+type)
-	MAINPREFIX+='if obsType==type('+typesDict[type]+'):\n\tr0=handle'+type+'(obs)\n'
+	handleTypeNames.append('handle'+theType)
+	MAINPREFIX+='if obsType==type('+typesDict[theType]+'):\n\tr0=handle'+theType+'(obs)\n'
 	i+=1
 #for i in xrange(1,REGISTERS):
 #	MAINPREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
