@@ -21,11 +21,17 @@ class Chromosome(object):
 #	def epigenetic(self,obs):
 #		self.functions=self.generateFunctionDict(obs)
 #		self.rna=self.generateInstructions(obs)
-	#def genMainFunc(self,obs=None):
-	def genInputFunc(self,obs=None):
-		self.mainFunctionLength=10
+	def genMainFunc(self,obs=None):
+		self.mainFunctionLength=2
 		func=[]
 		for i in xrange(self.mainFunctionLength):
+			tmp=self.tables.mainInstructionsTable[random.randint(0,self.tables.MLUTLENGTH-1)]
+			func.append(tmp)
+		return func
+	def genInputFunc(self,obs=None):
+		self.inputFunctionLength=10
+		func=[]
+		for i in xrange(self.inputFunctionLength):
 			tmp=self.tables.mainInstructionsTable[random.randint(0,self.tables.MLUTLENGTH-1)]
 			func.append(tmp)
 		return func
@@ -37,8 +43,7 @@ class Chromosome(object):
 		return func
 	def generateFunctionDict(self,obs=None):
 		self.functions={}
-#		self.functions['main']=self.genMainFunc()
-		self.functions['main']=self.genInputFunc()
+		self.functions['main']=self.genMainFunc()
 		self.functions['misc']=[]
 		self.functions['input']={}
 		for i in xrange(self.tables.FUNCTIONS):
