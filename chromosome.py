@@ -29,17 +29,15 @@ for t in typesList:
 		toBeRemoved.append(t)
 for t in toBeRemoved:
 	typesList.remove(t)
-typesDict={}
-typesDict['ListType']='[1,2,3]'
-typesDict['StringType']='"abc"'
+typesList=['ListType','StringType']
 handleTypeNames=[]
 MAINPREFIX='obsType=type(obs)\n'
 i=0
-for theType in typesDict:
+for theType in typesList:
 	if i>0:
 		MAINPREFIX+='el'
 	handleTypeNames.append('handle'+theType)
-	MAINPREFIX+='if obsType==type('+typesDict[theType]+'):\n\tr0=handle'+theType+'(obs)\n'
+	MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=handle'+theType+'(obs)\n'
 	i+=1
 #for i in xrange(1,REGISTERS):
 #	MAINPREFIX+='r'+str(i)+'=obs['+str(i%OBSERVATIONS)+']\n'
