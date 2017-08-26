@@ -157,11 +157,16 @@ class Environment(object):
 		self.latest_obs=obs
 		self.desired_response=target
 
-		for organism in self.organisms:
+		for i in xrange(len(self.organisms)):
+			organism=self.organisms[i]
 			total_response=organism.step([self.latest_obs,self.myDictionary])
-			fitness=self.getFitness(organism,total_response,target)
-			organism.assign(fitness)
-			self.rankings.append([fitness,organism])
+			if total_response[0]==None:
+				self.organisms[i]=Organism(tables=self.table)
+				self.organisms[i].assign(self.MAXFITNESS)
+			else:
+				fitness=self.getFitness(organism,total_response,target)
+				organism.assign(fitness)
+				self.rankings.append([fitness,organism])
 		self.rankings.sort()
 		if t%500==0:
 			self.status()

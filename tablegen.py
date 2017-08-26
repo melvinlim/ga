@@ -77,7 +77,7 @@ class Table(object):
 			for j in xrange(self.MYLISTLENGTH):
 				for cond in conditions:
 					self.mainInstructionsTable.append('if '+cond+':\n\t\tself.myList['+str(j)+']'+'=self.'+self.functionNames[i]+'(self)')
-					print('if '+cond+'\n\tself.myList['+str(j)+']'+'=self.'+self.functionNames[i]+'(self)')
+#					print('if '+cond+'\n\tself.myList['+str(j)+']'+'=self.'+self.functionNames[i]+'(self)')
 		self.mainInstructionsTable+=self.miscInstructionsTable
 		self.MISCITLENGTH=len(self.miscInstructionsTable)
 		self.MAINITLENGTH=len(self.mainInstructionsTable)
