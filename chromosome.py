@@ -9,7 +9,7 @@ class Chromosome(object):
 	def __init__(self,tables,functions=None,functionLength=10):
 		self.tables=tables
 		self.functionLength=functionLength
-		self.myList=[0]*self.tables.MYLISTLENGTH
+		self.myList=[None]*self.tables.MYLISTLENGTH
 		if functions==None:
 			self.generateFunctionDict()
 		else:
@@ -89,21 +89,19 @@ class Chromosome(object):
 		self.rna.append(ans)
 		self.rnaLength=totalInstructionLength
 	def execute(self,obs):
-		r0=None
+		self.myList=[0]*self.tables.MYLISTLENGTH
 		try:
-			self.myList=[0]*self.tables.MYLISTLENGTH
-			r0=self.go(self,obs)
-			r0=self.myList[0]
+			self.myList[0]=self.go(self,obs)
 			try:
-				r0=float(r0)
+				self.myList[0]=float(self.myList[0])
 			except:
 				if DEBUG:
 					print 'r0 assigned huge number'
-				r0=None
+				self.myList[0]=None
 		except:
 			if DEBUG:
 				print self.rna
 				print "Unexpected error:", sys.exc_info()
 				time.sleep(1)
-			r0=None
-		return r0
+			self.myList[0]=None
+		return self.myList[0]
