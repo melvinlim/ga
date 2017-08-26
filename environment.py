@@ -109,6 +109,8 @@ class Environment(object):
 		max_string_error+=abs(m-n)*max_char_error
 		if string_error>max_string_error:
 			string_error=max_string_error
+		if string_response=='':		#high error for not responding with anything.
+			string_error=4*max_string_error
 		#string_error/=float(max_string_error)
 		return string_error
 	def threeWayTournament(self):
