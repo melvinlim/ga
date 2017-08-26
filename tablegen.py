@@ -67,5 +67,6 @@ class Table(object):
 		for i in xrange(n):
 			for j in xrange(self.REGISTERS):
 				self.mainInstructionsTable.append('r'+str(j)+'=self.'+self.functionNames[i]+'(self)')
+		self.mainInstructionsTable+=self.miscInstructionsTable
 		self.MISCITLENGTH=len(self.miscInstructionsTable)
 		self.MAINITLENGTH=len(self.mainInstructionsTable)

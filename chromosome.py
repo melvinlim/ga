@@ -20,7 +20,7 @@ class Chromosome(object):
 #		self.functions=self.generateFunctionDict(obs)
 #		self.rna=self.generateInstructions(obs)
 	def genMainFunc(self,obs=None):
-		self.mainFunctionLength=2
+		self.mainFunctionLength=4
 		func=[]
 		for i in xrange(self.mainFunctionLength):
 			tmp=self.tables.mainInstructionsTable[random.randint(0,self.tables.MAINITLENGTH-1)]
