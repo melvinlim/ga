@@ -98,19 +98,40 @@ class Environment(object):
 		m=max(len(string_response),len(desired_string_response))
 		string_error+=abs(m-n)*200
 		return string_error
-	def step(self,t):
-		self.rankings=[]
+	def threeWayTournament(self):
+		[x,y,z]=random.sample(xrange(0,self.CAPACITY),3)
+		if self.organisms[x].fitness>=self.organisms[y].fitness:
+			if self.organisms[y].fitness>=self.organisms[z].fitness:
+				self.organisms[z]=self.crossOrganisms(self.organisms[x],self.organisms[y])
+				self.organisms[z].assign(self.MAXFITNESS)
+			else:
+				self.organisms[y]=self.crossOrganisms(self.organisms[x],self.organisms[z])
+				self.organisms[y].assign(self.MAXFITNESS)
+		elif self.organisms[x].fitness>=self.organisms[z].fitness:
+			self.organisms[z]=self.crossOrganisms(self.organisms[x],self.organisms[y])
+			self.organisms[z].assign(self.MAXFITNESS)
+		else:
+			self.organisms[x]=self.crossOrganisms(self.organisms[y],self.organisms[z])
+			self.organisms[x].assign(self.MAXFITNESS)
+	def genExamples(self):
 		obs=[]
 		for i in range(5):
 			obs.append(random.randint(0,1000))
 		desired_numerical_response=self.genNumericProb(obs)
 		desired_string_response=self.genStringProb(obs)
+		target=[desired_numerical_response,desired_string_response]
+		return [obs,target]
+	def step(self,t):
+		self.rankings=[]
+
+		[obs,target]=self.genExamples()
 		self.latest_obs=obs
 
 		for organism in self.organisms:
 			total_response=organism.step([self.latest_obs,self.myDictionary])
 			if total_response:
 				[numerical_response,string_response]=total_response
+				[desired_numerical_response,desired_string_response]=target
 
 				numerical_error=self.getNumericError(numerical_response,desired_numerical_response)
 
@@ -128,17 +149,4 @@ class Environment(object):
 			self.status()
 
 		for i in xrange(self.REPLACEMENTS):
-			[x,y,z]=random.sample(xrange(0,self.CAPACITY),3)
-			if self.organisms[x].fitness>=self.organisms[y].fitness:
-				if self.organisms[y].fitness>=self.organisms[z].fitness:
-					self.organisms[z]=self.crossOrganisms(self.organisms[x],self.organisms[y])
-					self.organisms[z].assign(self.MAXFITNESS)
-				else:
-					self.organisms[y]=self.crossOrganisms(self.organisms[x],self.organisms[z])
-					self.organisms[y].assign(self.MAXFITNESS)
-			elif self.organisms[x].fitness>=self.organisms[z].fitness:
-				self.organisms[z]=self.crossOrganisms(self.organisms[x],self.organisms[y])
-				self.organisms[z].assign(self.MAXFITNESS)
-			else:
-				self.organisms[x]=self.crossOrganisms(self.organisms[y],self.organisms[z])
-				self.organisms[x].assign(self.MAXFITNESS)
+			self.threeWayTournament()
