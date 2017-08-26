@@ -64,23 +64,33 @@ class Environment(object):
 		print best.step([self.latest_obs,self.myDictionary])
 		#print desired_numerical_response,desired_string_response
 		print self.desired_response
-	def step(self,t):
-		self.rankings=[]
-		x=random.randint(0,1000)
-		y=random.randint(0,1000)
-		z=random.randint(0,1000)
-		a=random.randint(0,1000)
-		self.latest_obs=[x,y,z,a]
+	def genNumericProb(self,obs):
+		x=obs[0]
+		y=obs[1]
+		z=obs[2]
+		a=obs[3]
 		desired_numerical_response=[]
 		desired_numerical_response+=[x*y+z*a]
 		desired_numerical_response+=[x+y+z+a]
+		return desired_numerical_response
+	def genStringProb(self,obs):
 		desired_string_response=[]
-		command=random.randint(0,1)
-		if command==1:
+		if(obs[4]>=500):
+			obs[4]=1
 			desired_string_response+='hi'
 		else:
+			obs[4]=0
 			desired_string_response+='??'
-		self.latest_obs.append(command)
+		return desired_string_response
+	def step(self,t):
+		self.rankings=[]
+		obs=[]
+		for i in range(5):
+			obs.append(random.randint(0,1000))
+		desired_numerical_response=self.genNumericProb(obs)
+		desired_string_response=self.genStringProb(obs)
+		self.latest_obs=obs
+
 		for organism in self.organisms:
 			total_response=organism.step([self.latest_obs,self.myDictionary])
 			if total_response:
