@@ -7,6 +7,9 @@ REPLACEMENTS=20
 MAXFITNESS=1.0
 from organism import Organism
 from environment import Environment
+myDictionary=[]
+myDictionary.append('hi')
+myDictionary.append('??')
 organisms=[]
 env=Environment()
 for n in xrange(CAPACITY):
@@ -28,8 +31,9 @@ for t in xrange(TIME):
 		desired_string_response+='hi'
 	else:
 		desired_string_response+='??'
+	obs.append(command)
 	for organism in organisms:
-		total_response=organism.step(obs)
+		total_response=organism.step([obs,myDictionary])
 		if total_response:
 			[numerical_response,string_response]=total_response
 			error=0
@@ -74,5 +78,5 @@ for t in xrange(TIME):
 #	print organisms
 print rankings[-1]
 b=rankings[-1][1]
-print b.step(obs)
+print b.step([obs,myDictionary])
 print desired_response,desired_string_response

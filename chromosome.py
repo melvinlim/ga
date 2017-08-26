@@ -89,7 +89,7 @@ class Chromosome(object):
 		self.rna.append(ans)
 		self.rnaLength=totalInstructionLength
 	def execute(self,obs):
-		self.obs=obs
+		[self.obs,self.myDictionary]=obs
 		self.myString=''
 		self.myList=[0]*self.tables.MYLISTLENGTH
 		try:

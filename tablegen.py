@@ -8,6 +8,8 @@ class Table(object):
 		#operators=['+=','-=','*=','/=']
 		operators=['+=','-=','*=']
 		self.instructionsTable=[]
+		for i in xrange(0x41,(0x61+26)):
+			self.instructionsTable.append('self.myString+=chr('+str(i)+')')
 		for i in xrange(self.MYLISTLENGTH):
 			self.instructionsTable.append('self.myList['+str(i)+']='+'len(self.obs)')
 			self.instructionsTable.append('r1=self.myList['+str(i)+']')
@@ -19,6 +21,7 @@ class Table(object):
 			for j in xrange(self.REGISTERS):
 					self.instructionsTable.append('self.myList['+str(i)+']=r'+str(j))
 		for i in xrange(self.REGISTERS):
+			self.instructionsTable.append('self.myString+=chr(int(r'+str(i)+'%256))')
 			for j in xrange(self.REGISTERS):
 				self.instructionsTable.append('r'+str(i)+'='+'self.obs[int(r'+str(j)+'%len(self.obs))]')
 				for operator in operators:
