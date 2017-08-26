@@ -93,15 +93,16 @@ class Chromosome(object):
 		try:
 			self.myList[0]=self.go(self,obs)
 			try:
-				self.myList[0]=float(self.myList[0])
+				for i in range(len(self.myList)):
+					self.myList[i]=float(self.myList[i])
 			except:
 				if DEBUG:
-					print 'r0 assigned huge number'
-				self.myList[0]=None
+					print 'huge number was assigned to something'
+				self.myList=None
 		except:
 			if DEBUG:
 				print self.rna
 				print "Unexpected error:", sys.exc_info()
 				time.sleep(1)
-			self.myList[0]=None
-		return self.myList[0]
+			self.myList=None
+		return self.myList

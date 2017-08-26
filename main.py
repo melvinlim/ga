@@ -19,13 +19,15 @@ for t in xrange(TIME):
 	z=random.randint(0,1000)
 	a=random.randint(0,1000)
 	obs=[x,y,z,a]
-	desired_response=x*y+z*a
+	desired_response=[x*y+z*a]
 	for organism in organisms:
 		response=organism.step(obs)
 		if response:
-			error=response-desired_response
+			error=0
+			for i in range(len(desired_response)):
+				error+=abs(response[i]-desired_response[i])
 			lengthPenalty=organism.chromosome.rnaLength*1
-			fitness=1.0/(abs(error)+1.0+lengthPenalty)
+			fitness=1.0/((error)+1.0+lengthPenalty)
 		else:
 			fitness=0
 		organism.assign(fitness)
