@@ -113,6 +113,20 @@ class Environment(object):
 			string_error=4*max_string_error
 		#string_error/=float(max_string_error)
 		return string_error
+	def getFitness(self,organism,total_response,target):
+		if total_response:
+			[numerical_response,string_response]=total_response
+			[desired_numerical_response,desired_string_response]=target
+
+			numerical_error=self.getNumericError(numerical_response,desired_numerical_response)
+
+			string_error=self.getStringError(string_response,desired_string_response)
+
+			lengthPenalty=organism.chromosome.rnaLength/100.0
+			fitness=1.0/(numerical_error+string_error+1.0+lengthPenalty)
+		else:
+			fitness=0
+		return fitness
 	def threeWayTournament(self):
 		[x,y,z]=random.sample(xrange(0,self.CAPACITY),3)
 		if self.organisms[x].fitness>=self.organisms[y].fitness:
@@ -141,25 +155,14 @@ class Environment(object):
 
 		[obs,target]=self.genExamples()
 		self.latest_obs=obs
+		self.desired_response=target
 
 		for organism in self.organisms:
 			total_response=organism.step([self.latest_obs,self.myDictionary])
-			if total_response:
-				[numerical_response,string_response]=total_response
-				[desired_numerical_response,desired_string_response]=target
-
-				numerical_error=self.getNumericError(numerical_response,desired_numerical_response)
-
-				string_error=self.getStringError(string_response,desired_string_response)
-
-				lengthPenalty=organism.chromosome.rnaLength/100.0
-				fitness=1.0/(numerical_error+string_error+1.0+lengthPenalty)
-			else:
-				fitness=0
+			fitness=self.getFitness(organism,total_response,target)
 			organism.assign(fitness)
 			self.rankings.append([fitness,organism])
 		self.rankings.sort()
-		self.desired_response=[desired_numerical_response,desired_string_response]
 		if t%500==0:
 			self.status()
 
