@@ -40,9 +40,9 @@ class Environment(object):
 		self.MAXFITNESS=maxfitness
 		self.contents=[]
 		self.table=tablegen.Table()
-		self.myDictionary=[]
-		self.myDictionary.append('hi')
-		self.myDictionary.append('??')
+		self.wordList=[]
+		self.wordList.append('hi')
+		self.wordList.append('??')
 		self.organisms=[]
 		for n in xrange(self.CAPACITY):
 			o=Organism(tables=self.table)
@@ -66,7 +66,7 @@ class Environment(object):
 		for ex in self.recentExamples:
 			[obs,des]=ex
 			print str(i)+'. resp:',
-			print best.step([obs,self.myDictionary])
+			print best.step([obs,self.wordList])
 			print str(i)+'. desi:',
 			print des
 			i+=1
@@ -173,7 +173,7 @@ class Environment(object):
 			for example in self.recentExamples:
 				[obs,target]=example
 
-				total_response=organism.step([obs,self.myDictionary])
+				total_response=organism.step([obs,self.wordList])
 				if total_response[0]==None:
 					self.organisms[i]=Organism(tables=self.table)
 					self.organisms[i].assign(self.MAXFITNESS)

@@ -7,6 +7,7 @@ DEBUG=True
 class Chromosome(object):
 	random.seed(time.time())
 	def __init__(self,tables,functions=None,functionLength=10):
+		self.myDictionary={}
 		self.tables=tables
 		self.functionLength=functionLength
 		self.myList=[None]*self.tables.MYLISTLENGTH
@@ -88,8 +89,9 @@ class Chromosome(object):
 		totalInstructionLength+=len(ans)
 		self.rna.append(ans)
 		self.rnaLength=totalInstructionLength
+		self.rnaLength+=len(self.myDictionary)
 	def execute(self,obs):
-		[self.obs,self.myDictionary]=obs
+		[self.obs,self.wordList]=obs
 		self.myString=''
 		self.myList=[0]*self.tables.MYLISTLENGTH
 		try:

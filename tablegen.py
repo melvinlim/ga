@@ -22,7 +22,7 @@ class Table(object):
 				self.miscInstructionsTable.append('self.myList['+str(i)+']=r'+str(j))
 		for i in xrange(self.REGISTERS):
 			self.miscInstructionsTable.append('self.myString+=chr(int(r'+str(i)+'%256))')
-			self.miscInstructionsTable.append('self.myString+=self.myDictionary[int(r'+str(i)+'%len(self.myDictionary))]')
+			self.miscInstructionsTable.append('self.myString+=self.wordList[int(r'+str(i)+'%len(self.wordList))]')
 			for j in xrange(self.REGISTERS):
 				self.miscInstructionsTable.append('r'+str(i)+'='+'self.obs[int(r'+str(j)+'%len(self.obs))]')
 				for operator in operators:
