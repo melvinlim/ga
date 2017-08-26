@@ -58,7 +58,7 @@ class Chromosome(object):
 			ans+=self.tables.FUNCTIONPREFIX
 			for instruction in function:
 				ans+='\t'+instruction+'\n'
-			ans+='\treturn r0\n'
+			#ans+='\treturn r0\n'
 			#ans+='self.f'+str(i)+'=types.MethodType(f'+str(i)+',self)\n'
 			ans+='self.f'+str(i)+'=f'+str(i)+'\n'
 			exec(ans)
@@ -70,7 +70,7 @@ class Chromosome(object):
 			ans+=self.tables.FUNCTIONPREFIX
 			for instruction in self.functions['input'][function]:
 				ans+='\t'+instruction+'\n'
-			ans+='\treturn r0\n'
+			#ans+='\treturn r0\n'
 			#ans+='self.'+function+'=types.MethodType('+function+',self)\n'
 			ans+='self.'+function+'='+function+'\n'
 			exec(ans)

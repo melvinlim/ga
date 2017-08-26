@@ -72,11 +72,13 @@ class Table(object):
 		n=self.FUNCTIONS
 		self.mainInstructionsTable=[]
 		for i in xrange(n):
-			for j in xrange(self.REGISTERS):
-				self.mainInstructionsTable.append('r'+str(j)+'=self.'+self.functionNames[i]+'(self)')
-			for j in xrange(self.MYLISTLENGTH):
-				for cond in conditions:
-					self.mainInstructionsTable.append('if '+cond+':\n\t\tself.myList['+str(j)+']'+'=self.'+self.functionNames[i]+'(self)')
+			self.mainInstructionsTable.append('self.'+self.functionNames[i]+'(self)')
+			#for j in xrange(self.REGISTERS):
+				#self.mainInstructionsTable.append('r'+str(j)+'=self.'+self.functionNames[i]+'(self)')
+			for cond in conditions:
+				self.mainInstructionsTable.append('if '+cond+':\n\t\t'+'self.'+self.functionNames[i]+'(self)')
+				#for j in xrange(self.MYLISTLENGTH):
+					#self.mainInstructionsTable.append('if '+cond+':\n\t\tself.myList['+str(j)+']'+'=self.'+self.functionNames[i]+'(self)')
 #					print('if '+cond+'\n\tself.myList['+str(j)+']'+'=self.'+self.functionNames[i]+'(self)')
 		self.mainInstructionsTable+=self.miscInstructionsTable
 		self.MISCITLENGTH=len(self.miscInstructionsTable)
