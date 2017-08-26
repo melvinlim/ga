@@ -36,22 +36,23 @@ for t in xrange(TIME):
 		total_response=organism.step([obs,myDictionary])
 		if total_response:
 			[numerical_response,string_response]=total_response
-			error=0
 
+			numerical_error=0
 			if numerical_response:
 				for i in range(len(desired_response)):
-					error+=abs(numerical_response[i]-desired_response[i])
+					numerical_error+=abs(numerical_response[i]-desired_response[i])
 			else:
-				error+=sum(desired_response)
+				numerical_error+=sum(desired_response)
 
+			string_error=0
 			n=min(len(string_response),len(desired_string_response))
 			for i in range(n):
-				error+=abs(ord(string_response[i])-ord(desired_string_response[i]))*40
+				string_error+=abs(ord(string_response[i])-ord(desired_string_response[i]))*40
 			m=max(len(string_response),len(desired_string_response))
-			error+=(m-n)*400
+			string_error+=(m-n)*400
 
 			lengthPenalty=organism.chromosome.rnaLength*1
-			fitness=1.0/((error)+1.0+lengthPenalty)
+			fitness=1.0/(numerical_error+string_error+1.0+lengthPenalty)
 		else:
 			fitness=0
 		organism.assign(fitness)
