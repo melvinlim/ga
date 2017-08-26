@@ -84,19 +84,32 @@ class Environment(object):
 		return desired_string_response
 	def getNumericError(self,numerical_response,desired_numerical_response):
 		numerical_error=0
-		if numerical_response:
+		max_numerical_error=0
+		for i in range(len(desired_numerical_response)):
+			max_numerical_error+=abs(desired_numerical_response[i])
+		if numerical_response!=None:
 			for i in range(len(desired_numerical_response)):
 				numerical_error+=abs(numerical_response[i]-desired_numerical_response[i])
 		else:
-			numerical_error+=sum(desired_numerical_response)
+			numerical_error=max_numerical_error
+		if numerical_error>max_numerical_error:
+			numerical_error=max_numerical_error
+		#numerical_error/=float(max_numerical_error)
 		return numerical_error
 	def getStringError(self,string_response,desired_string_response):
 		string_error=0
 		n=min(len(string_response),len(desired_string_response))
-		for i in range(n):
-			string_error+=abs(ord(string_response[i])-ord(desired_string_response[i]))*40
 		m=max(len(string_response),len(desired_string_response))
-		string_error+=abs(m-n)*200
+		max_string_error=0
+		for i in range(n):
+			string_error+=abs(ord(string_response[i])-ord(desired_string_response[i]))
+			max_string_error+=abs(ord(desired_string_response[i]))
+		max_char_error=max_string_error*1.0/float(m)
+		string_error+=abs(m-n)*max_char_error
+		max_string_error+=abs(m-n)*max_char_error
+		if string_error>max_string_error:
+			string_error=max_string_error
+		#string_error/=float(max_string_error)
 		return string_error
 	def threeWayTournament(self):
 		[x,y,z]=random.sample(xrange(0,self.CAPACITY),3)
@@ -137,7 +150,7 @@ class Environment(object):
 
 				string_error=self.getStringError(string_response,desired_string_response)
 
-				lengthPenalty=organism.chromosome.rnaLength*1
+				lengthPenalty=organism.chromosome.rnaLength/100.0
 				fitness=1.0/(numerical_error+string_error+1.0+lengthPenalty)
 			else:
 				fitness=0
