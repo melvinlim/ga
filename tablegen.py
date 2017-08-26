@@ -22,6 +22,7 @@ class Table(object):
 					self.instructionsTable.append('self.myList['+str(i)+']=r'+str(j))
 		for i in xrange(self.REGISTERS):
 			self.instructionsTable.append('self.myString+=chr(int(r'+str(i)+'%256))')
+			self.instructionsTable.append('self.myString+=self.myDictionary[int(r'+str(i)+'%len(self.myDictionary))]')
 			for j in xrange(self.REGISTERS):
 				self.instructionsTable.append('r'+str(i)+'='+'self.obs[int(r'+str(j)+'%len(self.obs))]')
 				for operator in operators:
