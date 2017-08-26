@@ -23,20 +23,20 @@ class Chromosome(object):
 		self.mainFunctionLength=2
 		func=[]
 		for i in xrange(self.mainFunctionLength):
-			tmp=self.tables.mainInstructionsTable[random.randint(0,self.tables.MLUTLENGTH-1)]
+			tmp=self.tables.mainInstructionsTable[random.randint(0,self.tables.MAINITLENGTH-1)]
 			func.append(tmp)
 		return func
 	def genInputFunc(self,obs=None):
 		self.inputFunctionLength=10
 		func=[]
 		for i in xrange(self.inputFunctionLength):
-			tmp=self.tables.mainInstructionsTable[random.randint(0,self.tables.MLUTLENGTH-1)]
+			tmp=self.tables.mainInstructionsTable[random.randint(0,self.tables.MAINITLENGTH-1)]
 			func.append(tmp)
 		return func
 	def genMiscFunc(self,obs=None):
 		func=[]
 		for i in xrange(self.functionLength):
-			tmp=self.tables.instructionsTable[random.randint(0,self.tables.LUTLENGTH-1)]
+			tmp=self.tables.miscInstructionsTable[random.randint(0,self.tables.MISCITLENGTH-1)]
 			func.append(tmp)
 		return func
 	def generateFunctionDict(self,obs=None):
@@ -82,7 +82,7 @@ class Chromosome(object):
 		for instruction in main:
 			ans+='\t'+instruction+'\n'
 		#ans+='self.go=types.MethodType(go,self)\n'
-		ans+='\treturn r0\n'
+		#ans+='\treturn r0\n'
 		ans+='self.go=go\n'
 		exec(ans)
 		totalInstructionLength+=len(ans)
@@ -93,8 +93,8 @@ class Chromosome(object):
 		self.myString=''
 		self.myList=[0]*self.tables.MYLISTLENGTH
 		try:
-			self.myList[0]=self.go(self)
-			#self.go(self)
+			#self.myList[0]=self.go(self)
+			self.go(self)
 			try:
 				for i in range(len(self.myList)):
 					self.myList[i]=float(self.myList[i])

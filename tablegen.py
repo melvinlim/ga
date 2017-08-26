@@ -7,27 +7,27 @@ class Table(object):
 #		OBSERVATIONS=3	#length of observation vector.
 		#operators=['+=','-=','*=','/=']
 		operators=['+=','-=','*=']
-		self.instructionsTable=[]
+		self.miscInstructionsTable=[]
 		for i in xrange(0x41,(0x61+26)):
-			self.instructionsTable.append('self.myString+=chr('+str(i)+')')
+			self.miscInstructionsTable.append('self.myString+=chr('+str(i)+')')
 		for i in xrange(self.MYLISTLENGTH):
-			self.instructionsTable.append('self.myList['+str(i)+']='+'len(self.obs)')
+			self.miscInstructionsTable.append('self.myList['+str(i)+']='+'len(self.obs)')
 			for j in xrange(self.MYLISTLENGTH):
-				self.instructionsTable.append('self.myList['+str(i)+']='+'self.obs[int(self.myList['+str(j)+']%len(self.obs))]')
+				self.miscInstructionsTable.append('self.myList['+str(i)+']='+'self.obs[int(self.myList['+str(j)+']%len(self.obs))]')
 				if i!=j:
-					self.instructionsTable.append('self.myList['+str(i)+']='+'self.myList['+str(j)+']')
-					self.instructionsTable.append('r'+str(i)+'='+'r'+str(j))
+					self.miscInstructionsTable.append('self.myList['+str(i)+']='+'self.myList['+str(j)+']')
+					self.miscInstructionsTable.append('r'+str(i)+'='+'r'+str(j))
 			for j in xrange(self.REGISTERS):
-				self.instructionsTable.append('r'+str(j)+'=self.myList['+str(i)+']')
-				self.instructionsTable.append('self.myList['+str(i)+']=r'+str(j))
+				self.miscInstructionsTable.append('r'+str(j)+'=self.myList['+str(i)+']')
+				self.miscInstructionsTable.append('self.myList['+str(i)+']=r'+str(j))
 		for i in xrange(self.REGISTERS):
-			self.instructionsTable.append('self.myString+=chr(int(r'+str(i)+'%256))')
-			self.instructionsTable.append('self.myString+=self.myDictionary[int(r'+str(i)+'%len(self.myDictionary))]')
+			self.miscInstructionsTable.append('self.myString+=chr(int(r'+str(i)+'%256))')
+			self.miscInstructionsTable.append('self.myString+=self.myDictionary[int(r'+str(i)+'%len(self.myDictionary))]')
 			for j in xrange(self.REGISTERS):
-				self.instructionsTable.append('r'+str(i)+'='+'self.obs[int(r'+str(j)+'%len(self.obs))]')
+				self.miscInstructionsTable.append('r'+str(i)+'='+'self.obs[int(r'+str(j)+'%len(self.obs))]')
 				for operator in operators:
-					self.instructionsTable.append('r'+str(i)+operator+'r'+str(j))
-					#self.instructionsTable.append('self.myList['+str(i)+']'+operator+'self.myList['+str(j)+']')
+					self.miscInstructionsTable.append('r'+str(i)+operator+'r'+str(j))
+					#self.miscInstructionsTable.append('self.myList['+str(i)+']'+operator+'self.myList['+str(j)+']')
 		self.FUNCTIONPREFIX='\t'
 		for i in xrange(self.REGISTERS):
 			self.FUNCTIONPREFIX+='r'+str(i)+'='
@@ -67,5 +67,5 @@ class Table(object):
 		for i in xrange(n):
 			for j in xrange(self.REGISTERS):
 				self.mainInstructionsTable.append('r'+str(j)+'=self.'+self.functionNames[i]+'(self)')
-		self.LUTLENGTH=len(self.instructionsTable)
-		self.MLUTLENGTH=len(self.mainInstructionsTable)
+		self.MISCITLENGTH=len(self.miscInstructionsTable)
+		self.MAINITLENGTH=len(self.mainInstructionsTable)
