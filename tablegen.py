@@ -57,6 +57,13 @@ class Table(object):
 		#for i in xrange(1,self.REGISTERS):
 		#	self.MAINPREFIX+='r'+str(i)+'=self.obs['+str(i%OBSERVATIONS)+']\n'
 		#print self.MAINPREFIX
+		condOpers=['<','>','<=','>=','==','!=']
+		conditions=[]
+		for i in xrange(self.MYLISTLENGTH):
+			for j in xrange(self.MYLISTLENGTH):
+				for condOp in condOpers:
+					conditions.append('self.myList['+str(i)+']'+condOp+'self.myList['+str(j)+']')
+
 		#assert(False)
 		self.FUNCTIONS=2
 		self.functionNames=[]
@@ -67,6 +74,10 @@ class Table(object):
 		for i in xrange(n):
 			for j in xrange(self.REGISTERS):
 				self.mainInstructionsTable.append('r'+str(j)+'=self.'+self.functionNames[i]+'(self)')
+			for j in xrange(self.MYLISTLENGTH):
+				for cond in conditions:
+					self.mainInstructionsTable.append('if '+cond+':\n\t\tself.myList['+str(j)+']'+'=self.'+self.functionNames[i]+'(self)')
+					print('if '+cond+'\n\tself.myList['+str(j)+']'+'=self.'+self.functionNames[i]+'(self)')
 		self.mainInstructionsTable+=self.miscInstructionsTable
 		self.MISCITLENGTH=len(self.miscInstructionsTable)
 		self.MAINITLENGTH=len(self.mainInstructionsTable)
