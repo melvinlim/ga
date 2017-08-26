@@ -98,7 +98,8 @@ class Environment(object):
 				for i in range(n):
 					string_error+=abs(ord(string_response[i])-ord(desired_string_response[i]))*40
 				m=max(len(string_response),len(desired_string_response))
-				string_error+=(m-n)*400
+				string_error+=abs(m-n)*200
+#				string_error=0
 
 				lengthPenalty=organism.chromosome.rnaLength*1
 				fitness=1.0/(numerical_error+string_error+1.0+lengthPenalty)

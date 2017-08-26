@@ -27,7 +27,7 @@ class Table(object):
 				self.miscInstructionsTable.append('r'+str(i)+'='+'self.obs[int(r'+str(j)+'%len(self.obs))]')
 				for operator in operators:
 					self.miscInstructionsTable.append('r'+str(i)+operator+'r'+str(j))
-					#self.miscInstructionsTable.append('self.myList['+str(i)+']'+operator+'self.myList['+str(j)+']')
+					self.miscInstructionsTable.append('self.myList['+str(i)+']'+operator+'self.myList['+str(j)+']')
 		self.FUNCTIONPREFIX='\t'
 		for i in xrange(self.REGISTERS):
 			self.FUNCTIONPREFIX+='r'+str(i)+'='
