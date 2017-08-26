@@ -61,8 +61,9 @@ class Table(object):
 		conditions=[]
 		for i in xrange(self.MYLISTLENGTH):
 			for j in xrange(self.MYLISTLENGTH):
-				for condOp in condOpers:
-					conditions.append('self.myList['+str(i)+']'+condOp+'self.myList['+str(j)+']')
+				if i!=j:
+					for condOp in condOpers:
+						conditions.append('self.myList['+str(i)+']'+condOp+'self.myList['+str(j)+']')
 
 		#assert(False)
 		self.FUNCTIONS=2
