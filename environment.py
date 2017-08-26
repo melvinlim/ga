@@ -33,7 +33,8 @@ def concatDNA(x,y):
 		result['input'][key]=concatInstructions(x['input'][key],y['input'][key])
 	return result
 class Environment(object):
-	def __init__(self,capacity,replacements,maxfitness):
+	def __init__(self,capacity,replacements,maxfitness,evalsPerTimeStep=1):
+		self.evalsPerTimeStep=evalsPerTimeStep
 		self.CAPACITY=capacity
 		self.REPLACEMENTS=replacements
 		self.MAXFITNESS=maxfitness
@@ -61,9 +62,14 @@ class Environment(object):
 	def status(self):
 		print self.rankings[-1]
 		best=self.rankings[-1][1]
-		print best.step([self.latest_obs,self.myDictionary])
-		#print desired_numerical_response,desired_string_response
-		print self.desired_response
+		i=1
+		for ex in self.recentExamples:
+			[obs,des]=ex
+			print str(i)+'. resp:',
+			print best.step([obs,self.myDictionary])
+			print str(i)+'. desi:',
+			print des
+			i+=1
 	def genNumericProb(self,obs):
 		x=obs[0]
 		y=obs[1]
@@ -142,7 +148,7 @@ class Environment(object):
 		else:
 			self.organisms[x]=self.crossOrganisms(self.organisms[y],self.organisms[z])
 			self.organisms[x].assign(self.MAXFITNESS)
-	def genExamples(self):
+	def genExample(self):
 		obs=[]
 		for i in range(5):
 			obs.append(random.randint(0,1000))
@@ -150,23 +156,33 @@ class Environment(object):
 		desired_string_response=self.genStringProb(obs)
 		target=[desired_numerical_response,desired_string_response]
 		return [obs,target]
+	def genExamples(self,n):
+		examples=[]
+		for i in xrange(n):
+			examples.append(self.genExample())
+		return examples
 	def step(self,t):
 		self.rankings=[]
 
-		[obs,target]=self.genExamples()
-		self.latest_obs=obs
-		self.desired_response=target
+		self.recentExamples=self.genExamples(self.evalsPerTimeStep)
 
 		for i in xrange(len(self.organisms)):
 			organism=self.organisms[i]
-			total_response=organism.step([self.latest_obs,self.myDictionary])
-			if total_response[0]==None:
-				self.organisms[i]=Organism(tables=self.table)
-				self.organisms[i].assign(self.MAXFITNESS)
-			else:
-				fitness=self.getFitness(organism,total_response,target)
-				organism.assign(fitness)
-				self.rankings.append([fitness,organism])
+			fitness=0
+
+			for example in self.recentExamples:
+				[obs,target]=example
+
+				total_response=organism.step([obs,self.myDictionary])
+				if total_response[0]==None:
+					self.organisms[i]=Organism(tables=self.table)
+					self.organisms[i].assign(self.MAXFITNESS)
+				else:
+					fitness+=self.getFitness(organism,total_response,target)
+
+			organism.assign(fitness)
+			self.rankings.append([fitness,organism])
+
 		self.rankings.sort()
 		if t%500==0:
 			self.status()
