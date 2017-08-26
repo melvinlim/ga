@@ -1,7 +1,7 @@
 import random
 import types
 import sys
-TIME=200
+TIME=200000
 CAPACITY=200	#maintain this many organisms.
 REPLACEMENTS=20
 MAXFITNESS=1.0
@@ -46,9 +46,9 @@ for t in xrange(TIME):
 
 			n=min(len(string_response),len(desired_string_response))
 			for i in range(n):
-				error+=abs(ord(string_response[i])-ord(desired_string_response[i]))
+				error+=abs(ord(string_response[i])-ord(desired_string_response[i]))*40
 			m=max(len(string_response),len(desired_string_response))
-			error+=(m-n)*100
+			error+=(m-n)*400
 
 			lengthPenalty=organism.chromosome.rnaLength*1
 			fitness=1.0/((error)+1.0+lengthPenalty)
@@ -58,6 +58,12 @@ for t in xrange(TIME):
 			#fitness=None
 		rankings.append([fitness,organism])
 	rankings.sort()
+	if t%500==0:
+		print rankings[-1]
+		b=rankings[-1][1]
+		print b.step([obs,myDictionary])
+		print desired_response,desired_string_response
+		
 #	print rankings[-1][1].step(obs),desired_response
 	for i in xrange(REPLACEMENTS):
 		[x,y,z]=random.sample(xrange(0,CAPACITY),3)

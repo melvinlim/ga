@@ -93,7 +93,8 @@ class Chromosome(object):
 		self.myString=''
 		self.myList=[0]*self.tables.MYLISTLENGTH
 		try:
-			self.myList[0]=self.go(self)
+			#self.myList[0]=self.go(self)
+			self.go(self)
 			try:
 				for i in range(len(self.myList)):
 					self.myList[i]=float(self.myList[i])

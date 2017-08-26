@@ -12,14 +12,14 @@ class Table(object):
 			self.instructionsTable.append('self.myString+=chr('+str(i)+')')
 		for i in xrange(self.MYLISTLENGTH):
 			self.instructionsTable.append('self.myList['+str(i)+']='+'len(self.obs)')
-			self.instructionsTable.append('r1=self.myList['+str(i)+']')
 			for j in xrange(self.MYLISTLENGTH):
 				self.instructionsTable.append('self.myList['+str(i)+']='+'self.obs[int(self.myList['+str(j)+']%len(self.obs))]')
 				if i!=j:
 					self.instructionsTable.append('self.myList['+str(i)+']='+'self.myList['+str(j)+']')
 					self.instructionsTable.append('r'+str(i)+'='+'r'+str(j))
 			for j in xrange(self.REGISTERS):
-					self.instructionsTable.append('self.myList['+str(i)+']=r'+str(j))
+				self.instructionsTable.append('r'+str(j)+'=self.myList['+str(i)+']')
+				self.instructionsTable.append('self.myList['+str(i)+']=r'+str(j))
 		for i in xrange(self.REGISTERS):
 			self.instructionsTable.append('self.myString+=chr(int(r'+str(i)+'%256))')
 			self.instructionsTable.append('self.myString+=self.myDictionary[int(r'+str(i)+'%len(self.myDictionary))]')
