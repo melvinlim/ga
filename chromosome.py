@@ -3,7 +3,7 @@ import sys
 import time
 import types
 DEBUG=True
-DEBUG=False
+#DEBUG=False
 class Chromosome(object):
 	random.seed(time.time())
 	def __init__(self,tables,functions=None,functionLength=10):
@@ -93,7 +93,7 @@ class Chromosome(object):
 		try:
 			self.myList=[0]*self.tables.MYLISTLENGTH
 			r0=self.go(self,obs)
-			#r0=self.myList[0]
+			r0=self.myList[0]
 			try:
 				r0=float(r0)
 			except:

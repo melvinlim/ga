@@ -11,12 +11,13 @@ class Table(object):
 		for i in xrange(self.MYLISTLENGTH):
 			self.instructionsTable.append('self.myList['+str(i)+']='+'len(obs)')
 			self.instructionsTable.append('r1=self.myList['+str(i)+']')
-			self.instructionsTable.append('self.myList['+str(i)+']=r1')
 			for j in xrange(self.MYLISTLENGTH):
 				self.instructionsTable.append('self.myList['+str(i)+']='+'obs[int(self.myList['+str(j)+']%len(obs))]')
 				if i!=j:
 					self.instructionsTable.append('self.myList['+str(i)+']='+'self.myList['+str(j)+']')
 					self.instructionsTable.append('r'+str(i)+'='+'r'+str(j))
+			for j in xrange(self.REGISTERS):
+					self.instructionsTable.append('self.myList['+str(i)+']=r'+str(j))
 		for i in xrange(self.REGISTERS):
 			for j in xrange(self.REGISTERS):
 				self.instructionsTable.append('r'+str(i)+'='+'obs[int(r'+str(j)+'%len(obs))]')
