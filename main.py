@@ -22,12 +22,30 @@ for t in xrange(TIME):
 	desired_response=[]
 	desired_response+=[x*y+z*a]
 	desired_response+=[x+y+z+a]
+	desired_string_response=[]
+	command=random.randint(0,1)
+	if command==1:
+		desired_string_response+='hi'
+	else:
+		desired_string_response+='??'
 	for organism in organisms:
-		response=organism.step(obs)
-		if response:
+		total_response=organism.step(obs)
+		if total_response:
+			[numerical_response,string_response]=total_response
 			error=0
-			for i in range(len(desired_response)):
-				error+=abs(response[i]-desired_response[i])
+
+			if numerical_response:
+				for i in range(len(desired_response)):
+					error+=abs(numerical_response[i]-desired_response[i])
+			else:
+				error+=sum(desired_response)
+
+			n=min(len(string_response),len(desired_string_response))
+			for i in range(n):
+				error+=abs(ord(string_response[i])-ord(desired_string_response[i]))
+			m=max(len(string_response),len(desired_string_response))
+			error+=(m-n)*100
+
 			lengthPenalty=organism.chromosome.rnaLength*1
 			fitness=1.0/((error)+1.0+lengthPenalty)
 		else:
@@ -57,4 +75,4 @@ for t in xrange(TIME):
 print rankings[-1]
 b=rankings[-1][1]
 print b.step(obs)
-print desired_response
+print desired_response,desired_string_response

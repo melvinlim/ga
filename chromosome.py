@@ -90,6 +90,7 @@ class Chromosome(object):
 		self.rnaLength=totalInstructionLength
 	def execute(self,obs):
 		self.obs=obs
+		self.myString=''
 		self.myList=[0]*self.tables.MYLISTLENGTH
 		try:
 			self.myList[0]=self.go(self)
@@ -106,4 +107,4 @@ class Chromosome(object):
 				print "Unexpected error:", sys.exc_info()
 				time.sleep(1)
 			self.myList=None
-		return self.myList
+		return [self.myList,self.myString]
