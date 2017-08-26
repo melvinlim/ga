@@ -82,6 +82,22 @@ class Environment(object):
 			obs[4]=0
 			desired_string_response+='??'
 		return desired_string_response
+	def getNumericError(self,numerical_response,desired_numerical_response):
+		numerical_error=0
+		if numerical_response:
+			for i in range(len(desired_numerical_response)):
+				numerical_error+=abs(numerical_response[i]-desired_numerical_response[i])
+		else:
+			numerical_error+=sum(desired_numerical_response)
+		return numerical_error
+	def getStringError(self,string_response,desired_string_response):
+		string_error=0
+		n=min(len(string_response),len(desired_string_response))
+		for i in range(n):
+			string_error+=abs(ord(string_response[i])-ord(desired_string_response[i]))*40
+		m=max(len(string_response),len(desired_string_response))
+		string_error+=abs(m-n)*200
+		return string_error
 	def step(self,t):
 		self.rankings=[]
 		obs=[]
@@ -96,27 +112,15 @@ class Environment(object):
 			if total_response:
 				[numerical_response,string_response]=total_response
 
-				numerical_error=0
-				if numerical_response:
-					for i in range(len(desired_numerical_response)):
-						numerical_error+=abs(numerical_response[i]-desired_numerical_response[i])
-				else:
-					numerical_error+=sum(desired_numerical_response)
+				numerical_error=self.getNumericError(numerical_response,desired_numerical_response)
 
-				string_error=0
-				n=min(len(string_response),len(desired_string_response))
-				for i in range(n):
-					string_error+=abs(ord(string_response[i])-ord(desired_string_response[i]))*40
-				m=max(len(string_response),len(desired_string_response))
-				string_error+=abs(m-n)*200
-#				string_error=0
+				string_error=self.getStringError(string_response,desired_string_response)
 
 				lengthPenalty=organism.chromosome.rnaLength*1
 				fitness=1.0/(numerical_error+string_error+1.0+lengthPenalty)
 			else:
 				fitness=0
 			organism.assign(fitness)
-				#fitness=None
 			self.rankings.append([fitness,organism])
 		self.rankings.sort()
 		self.desired_response=[desired_numerical_response,desired_string_response]
