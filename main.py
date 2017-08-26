@@ -19,7 +19,9 @@ for t in xrange(TIME):
 	z=random.randint(0,1000)
 	a=random.randint(0,1000)
 	obs=[x,y,z,a]
-	desired_response=[x*y+z*a]
+	desired_response=[]
+	desired_response+=[x*y+z*a]
+	desired_response+=[x+y+z+a]
 	for organism in organisms:
 		response=organism.step(obs)
 		if response:

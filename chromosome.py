@@ -54,7 +54,7 @@ class Chromosome(object):
 		ans=''
 		i=0
 		for function in self.functions['misc']:
-			ans='def f'+str(i)+'(self,obs):\n'
+			ans='def f'+str(i)+'(self):\n'
 			ans+=self.tables.FUNCTIONPREFIX
 			for instruction in function:
 				ans+='\t'+instruction+'\n'
@@ -66,7 +66,7 @@ class Chromosome(object):
 			self.rna.append(ans)
 			i+=1
 		for function in self.functions['input']:
-			ans='def '+function+'(self,obs):\n'
+			ans='def '+function+'(self):\n'
 			ans+=self.tables.FUNCTIONPREFIX
 			for instruction in self.functions['input'][function]:
 				ans+='\t'+instruction+'\n'
@@ -76,7 +76,7 @@ class Chromosome(object):
 			exec(ans)
 			totalInstructionLength+=len(ans)
 			self.rna.append(ans)
-		ans='def go(self,obs):\n'
+		ans='def go(self):\n'
 		ans+=self.tables.FUNCTIONPREFIX
 		main=self.functions['main']
 		for instruction in main:
@@ -89,9 +89,10 @@ class Chromosome(object):
 		self.rna.append(ans)
 		self.rnaLength=totalInstructionLength
 	def execute(self,obs):
+		self.obs=obs
 		self.myList=[0]*self.tables.MYLISTLENGTH
 		try:
-			self.myList[0]=self.go(self,obs)
+			self.myList[0]=self.go(self)
 			try:
 				for i in range(len(self.myList)):
 					self.myList[i]=float(self.myList[i])
