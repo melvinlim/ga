@@ -91,7 +91,7 @@ class Chromosome(object):
 		self.rnaLength=totalInstructionLength
 		self.rnaLength+=len(self.myDictionary)
 	def execute(self,allObs):
-		[self.obs,self.wordList]=allObs
+		[self.numericObs,self.wordList]=allObs
 		self.myString=''
 		self.numberList=[0]*self.tables.NUMBERLISTLENGTH
 		try:

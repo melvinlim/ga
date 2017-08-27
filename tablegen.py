@@ -23,9 +23,9 @@ class Table(object):
 		for i in xrange(0x41,(0x61+26)):
 			self.miscInstructionsTable.append('self.myString+=chr('+str(i)+')')
 		for i in xrange(self.NUMBERLISTLENGTH):
-#			self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'len(self.obs)')
+#			self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'len(self.numericObs)')
 			for j in xrange(self.NUMBERLISTLENGTH):
-				self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'self.obs[int(self.numberList['+str(j)+']%len(self.obs))]')
+				self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'self.numericObs[int(self.numberList['+str(j)+']%len(self.numericObs))]')
 				if i!=j:
 					self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'self.numberList['+str(j)+']')
 			for j in xrange(self.REGISTERS):
@@ -37,7 +37,7 @@ class Table(object):
 			for j in xrange(self.REGISTERS):
 				if i!=j:
 					self.miscInstructionsTable.append('r'+str(i)+'='+'r'+str(j))
-				self.miscInstructionsTable.append('r'+str(i)+'='+'self.obs[int(r'+str(j)+'%len(self.obs))]')
+				self.miscInstructionsTable.append('r'+str(i)+'='+'self.numericObs[int(r'+str(j)+'%len(self.numericObs))]')
 				for operator in operators:
 					self.miscInstructionsTable.append('r'+str(i)+operator+'r'+str(j))
 					self.miscInstructionsTable.append('self.numberList['+str(i)+']'+operator+'self.numberList['+str(j)+']')
@@ -46,8 +46,8 @@ class Table(object):
 			self.FUNCTIONPREFIX+='r'+str(i)+'='
 		self.FUNCTIONPREFIX+='0\n'
 #		for i in xrange(self.REGISTERS):
-#			self.FUNCTIONPREFIX+='\tr'+str(i)+'=len(self.obs)\n'
-#			self.FUNCTIONPREFIX+='\tr'+str(i)+'=self.obs['+str(i%OBSERVATIONS)+']\n'
+#			self.FUNCTIONPREFIX+='\tr'+str(i)+'=len(self.numericObs)\n'
+#			self.FUNCTIONPREFIX+='\tr'+str(i)+'=self.numericObs['+str(i%OBSERVATIONS)+']\n'
 		import types
 		typesList=dir(types)
 		toBeRemoved=[]
@@ -58,17 +58,17 @@ class Table(object):
 			typesList.remove(t)
 		typesList=['ListType','StringType']
 		self.handleTypeNames=[]
-		self.MAINPREFIX='obsType=type(self.obs)\n'
+		self.MAINPREFIX='obsType=type(self.numericObs)\n'
 		i=0
 		for theType in typesList:
 			if i>0:
 				self.MAINPREFIX+='el'
 			self.handleTypeNames.append('handle'+theType)
 			self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=self.handle'+theType+'(self)\n'
-#			self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=f1(self.obs)\n'
+#			self.MAINPREFIX+='if obsType==types.'+theType+':\n\tr0=f1(self.numericObs)\n'
 			i+=1
 		#for i in xrange(1,self.REGISTERS):
-		#	self.MAINPREFIX+='r'+str(i)+'=self.obs['+str(i%OBSERVATIONS)+']\n'
+		#	self.MAINPREFIX+='r'+str(i)+'=self.numericObs['+str(i%OBSERVATIONS)+']\n'
 		#print self.MAINPREFIX
 		condOpers=['<','>','<=','>=','==','!=']
 		conditions=[]
