@@ -10,6 +10,11 @@ def heads():
 def crossDicts(x,y):
 	xt=randint(0,len(x))
 	yt=randint(0,len(y))
+	LIMIT=3
+	if xt>LIMIT:
+		xt=LIMIT
+	if yt>LIMIT:
+		yt=LIMIT
 	xkeys=x.keys()
 	ykeys=y.keys()
 	xinds=random.sample(xrange(0,len(xkeys)),xt)
@@ -178,8 +183,8 @@ class Environment(object):
 			numericObs.append(random.randint(0,1000))
 		desired_numerical_response=self.genNumericProb(numericObs)
 		desired_string_response=self.genStringProb(numericObs)
-		if desired_string_response=='hi':
-			stringObs='Hello.'
+		if desired_string_response=='42':
+			stringObs='What is the meaning of life?'
 		else:
 			stringObs='...'
 		target=[desired_numerical_response,desired_string_response]
