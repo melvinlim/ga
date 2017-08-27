@@ -7,6 +7,10 @@ class Table(object):
 			self.wordListItems.append('self.wordList[int(r'+str(i)+'%len(self.wordList))]')
 		for j in xrange(self.NUMBERLISTLENGTH):
 			self.wordListItems.append('self.wordList[int(self.numberList['+str(j)+']%len(self.wordList))]')
+	def numericObs(self,string):
+		return 'self.numericObs[int('+string+'%len(self.numericObs))]'
+	def stringObs(self,string):
+		return 'self.stringObs[int('+string+'%len(self.stringObs))]'
 	def __init__(self):
 		self.NUMBERLISTLENGTH=4
 		self.REGISTERS=4	#number of registers.
@@ -18,14 +22,20 @@ class Table(object):
 #		for i in xrange(1,self.wordListItems):
 		for item1 in self.wordListItems:
 			self.miscInstructionsTable.append('self.myString='+item1)
+			self.miscInstructionsTable.append('if '+item1+' in self.myDictionary:\n\t\tself.myString=self.myDictionary['+item1+']')
+#			self.miscInstructionsTable.append('self.myString=self.myDictionary['+self.stringObs(item1)+']')
 			for item2 in self.wordListItems:
 				self.miscInstructionsTable.append('self.myDictionary['+item1+']='+item2)
+			for i in xrange(self.NUMBERLISTLENGTH):
+				self.miscInstructionsTable.append('self.myDictionary['+item1+']='+self.stringObs('self.numberList['+str(i)+']'))
+				self.miscInstructionsTable.append('self.myDictionary['+self.stringObs('self.numberList['+str(i)+']')+']='+item1)
 		for i in xrange(0x41,(0x61+26)):
 			self.miscInstructionsTable.append('self.myString+=chr('+str(i)+')')
 		for i in xrange(self.NUMBERLISTLENGTH):
 #			self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'len(self.numericObs)')
 			for j in xrange(self.NUMBERLISTLENGTH):
-				self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'self.numericObs[int(self.numberList['+str(j)+']%len(self.numericObs))]')
+				#self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'self.numericObs[int(self.numberList['+str(j)+']%len(self.numericObs))]')
+				self.miscInstructionsTable.append('self.numberList['+str(i)+']='+self.numericObs('self.numberList['+str(j)+']'))
 				if i!=j:
 					self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'self.numberList['+str(j)+']')
 			for j in xrange(self.REGISTERS):
