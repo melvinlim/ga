@@ -19,11 +19,11 @@ class Table(object):
 		for item1 in self.wordListItems:
 			self.miscInstructionsTable.append('self.myString='+item1)
 			for item2 in self.wordListItems:
-				self.miscInstructionsTable.append('self.myDictionary["'+item1+'"]='+item2)
+				self.miscInstructionsTable.append('self.myDictionary['+item1+']='+item2)
 		for i in xrange(0x41,(0x61+26)):
 			self.miscInstructionsTable.append('self.myString+=chr('+str(i)+')')
 		for i in xrange(self.NUMBERLISTLENGTH):
-			self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'len(self.obs)')
+#			self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'len(self.obs)')
 			for j in xrange(self.NUMBERLISTLENGTH):
 				self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'self.obs[int(self.numberList['+str(j)+']%len(self.obs))]')
 				if i!=j:
