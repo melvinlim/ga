@@ -33,6 +33,15 @@ def concatDNA(x,y):
 		result['input'][key]=concatInstructions(x['input'][key],y['input'][key])
 	return result
 class Environment(object):
+	def initWordList(self):
+		try:
+			fp=open('/usr/share/dict/words','r')
+			self.wordList=fp.read().strip('\r ').split('\n')
+			self.wordList.append('42')
+		except:
+			self.wordList=[]
+			self.wordList.append('nothing')
+			self.wordList.append('42')
 	def __init__(self,capacity,replacements,maxfitness,evalsPerTimeStep=1):
 		self.evalsPerTimeStep=evalsPerTimeStep
 		self.CAPACITY=capacity
@@ -40,9 +49,7 @@ class Environment(object):
 		self.MAXFITNESS=maxfitness
 		self.contents=[]
 		self.table=tablegen.Table()
-		self.wordList=[]
-		self.wordList.append('hi')
-		self.wordList.append('??')
+		self.initWordList()
 		self.organisms=[]
 		for n in xrange(self.CAPACITY):
 			o=Organism(tables=self.table)
@@ -83,10 +90,10 @@ class Environment(object):
 		desired_string_response=[]
 		if(obs[4]>=500):
 			obs[4]=1
-			desired_string_response+='hi'
+			desired_string_response+='nothing'
 		else:
 			obs[4]=0
-			desired_string_response+='??'
+			desired_string_response+='42'
 		return desired_string_response
 	def getNumericError(self,numerical_response,desired_numerical_response):
 		numerical_error=0
