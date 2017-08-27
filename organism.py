@@ -9,7 +9,7 @@ class Organism(object):
 			for i in xrange(len(self.chromosome.rna)):
 				print str(i)+': ',
 				print self.chromosome.rna[i].split('\n')[0]
-	def step(self,obs):
-		return self.chromosome.execute(obs)
+	def step(self,allObs):
+		return self.chromosome.execute(allObs=allObs)
 	def assign(self,fitness):
 		self.fitness=fitness

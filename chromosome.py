@@ -17,9 +17,9 @@ class Chromosome(object):
 			self.functions=functions
 		self.functionsLength=len(self.functions)
 		self.generateInstructions()
-#	def epigenetic(self,obs):
-#		self.functions=self.generateFunctionDict(obs)
-#		self.rna=self.generateInstructions(obs)
+#	def epigenetic(self,allObs):
+#		self.functions=self.generateFunctionDict(allObs)
+#		self.rna=self.generateInstructions(allObs)
 	def genMainFunc(self,obs=None):
 		self.mainFunctionLength=4
 		func=[]
@@ -90,8 +90,8 @@ class Chromosome(object):
 		self.rna.append(ans)
 		self.rnaLength=totalInstructionLength
 		self.rnaLength+=len(self.myDictionary)
-	def execute(self,obs):
-		[self.obs,self.wordList]=obs
+	def execute(self,allObs):
+		[self.obs,self.wordList]=allObs
 		self.myString=''
 		self.numberList=[0]*self.tables.NUMBERLISTLENGTH
 		try:
