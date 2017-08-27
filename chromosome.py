@@ -94,6 +94,7 @@ class Chromosome(object):
 		[self.numericObs,self.stringObs,self.wordList]=allObs
 		self.myString=''
 		self.numberList=[0]*self.tables.NUMBERLISTLENGTH
+		self.myDictionary.clear()
 		try:
 			#self.numberList[0]=self.go(self)
 			self.f0(self)

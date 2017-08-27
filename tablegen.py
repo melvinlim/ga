@@ -21,6 +21,7 @@ class Table(object):
 		self.miscInstructionsTable=[]
 		self.miscInstructionsTable.append('self.wordList.append(self.stringObs)')
 		self.miscInstructionsTable.append('self.wordList.insert(0,self.stringObs)')
+		self.miscInstructionsTable.append('if len(self.myDictionary)>0:\n\t\tself.myDictionary.popitem()')
 		#self.miscInstructionsTable.append('for word in self.stringObs:\n\t\tself.wordList.append(word)')
 		#self.miscInstructionsTable.append('for word in self.stringObs:\n\t\tself.wordList.insert(0,word)')
 #		for i in xrange(1,self.wordListItems):

@@ -34,11 +34,11 @@ def concatDNA(x,y):
 	return result
 class Environment(object):
 	def initWordList(self):
-		try:
-			fp=open('/usr/share/dict/words','r')
-			self.wordList=fp.read().strip('\r ').split('\n')
-			self.wordList.append('42')
-		except:
+#		try:
+#			fp=open('/usr/share/dict/words','r')
+#			self.wordList=fp.read().strip('\r ').split('\n')
+#			self.wordList.append('42')
+#		except:
 			self.wordList=[]
 			self.wordList.append('nothing')
 			self.wordList.append('42')
