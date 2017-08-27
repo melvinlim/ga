@@ -91,10 +91,10 @@ class Environment(object):
 	def getNumericError(self,numerical_response,desired_numerical_response):
 		numerical_error=0
 		max_numerical_error=0
-		for i in range(len(desired_numerical_response)):
+		for i in xrange(len(desired_numerical_response)):
 			max_numerical_error+=abs(desired_numerical_response[i])
 		if numerical_response!=None:
-			for i in range(len(desired_numerical_response)):
+			for i in xrange(len(desired_numerical_response)):
 				numerical_error+=abs(numerical_response[i]-desired_numerical_response[i])
 		else:
 			numerical_error=max_numerical_error
@@ -107,7 +107,7 @@ class Environment(object):
 		n=min(len(string_response),len(desired_string_response))
 		m=max(len(string_response),len(desired_string_response))
 		max_string_error=0
-		for i in range(n):
+		for i in xrange(n):
 			string_error+=abs(ord(string_response[i])-ord(desired_string_response[i]))
 			max_string_error+=abs(ord(desired_string_response[i]))
 		max_char_error=max_string_error*1.0/float(m)
@@ -150,7 +150,8 @@ class Environment(object):
 			self.organisms[x].assign(self.MAXFITNESS)
 	def genExample(self):
 		obs=[]
-		for i in range(5):
+		obsTargetLen=5
+		for i in xrange(obsTargetLen):
 			obs.append(random.randint(0,1000))
 		desired_numerical_response=self.genNumericProb(obs)
 		desired_string_response=self.genStringProb(obs)

@@ -6,7 +6,7 @@ class Organism(object):
 		if i!=None:
 			print self.chromosome.rna[i]
 		else:
-			for i in range(len(self.chromosome.rna)):
+			for i in xrange(len(self.chromosome.rna)):
 				print str(i)+': ',
 				print self.chromosome.rna[i].split('\n')[0]
 	def step(self,obs):

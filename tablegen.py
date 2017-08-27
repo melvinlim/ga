@@ -13,7 +13,7 @@ class Table(object):
 		operators=['+=','-=','*=']
 		self.initWordListItems()
 		self.miscInstructionsTable=[]
-#		for i in range(1,self.wordListItems):
+#		for i in xrange(1,self.wordListItems):
 		for item1 in self.wordListItems:
 			self.miscInstructionsTable.append('self.myString='+item1)
 			for item2 in self.wordListItems:
@@ -78,7 +78,7 @@ class Table(object):
 		#assert(False)
 		self.FUNCTIONS=2
 		self.functionNames=[]
-		for i in range(2):
+		for i in xrange(2):
 			self.functionNames.append('f'+str(i))
 		n=self.FUNCTIONS
 		self.mainInstructionsTable=[]

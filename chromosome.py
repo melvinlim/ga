@@ -98,7 +98,7 @@ class Chromosome(object):
 			#self.myList[0]=self.go(self)
 			self.go(self)
 			try:
-				for i in range(len(self.myList)):
+				for i in xrange(len(self.myList)):
 					self.myList[i]=float(self.myList[i])
 			except:
 				if DEBUG:
