@@ -135,9 +135,10 @@ class Environment(object):
 		n=min(len(string_response),len(desired_string_response))
 		m=max(len(string_response),len(desired_string_response))
 		max_string_error=0
+		for i in xrange(len(desired_string_response)):
+			max_string_error+=abs(ord(desired_string_response[i]))
 		for i in xrange(n):
 			string_error+=abs(ord(string_response[i])-ord(desired_string_response[i]))
-			max_string_error+=abs(ord(desired_string_response[i]))
 		max_char_error=max_string_error*1.0/float(m)
 		string_error+=abs(m-n)*max_char_error
 		max_string_error+=abs(m-n)*max_char_error
