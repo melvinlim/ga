@@ -223,3 +223,7 @@ class Environment(object):
 
 		for i in xrange(self.REPLACEMENTS):
 			self.threeWayTournament()
+
+		self.RANDOMIZATION=4
+		for i in xrange(self.RANDOMIZATION):
+			self.rankings[i][1]=Organism(tables=self.table)

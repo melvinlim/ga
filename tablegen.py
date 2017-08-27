@@ -19,6 +19,7 @@ class Table(object):
 		operators=['+=','-=','*=']
 		self.initWordListItems()
 		self.miscInstructionsTable=[]
+		self.miscInstructionsTable.append('for w1 in self.stringObs:\n\t\tfor w2 in self.wordList:\n\t\t\tself.myDictionary[w1]=w2')
 		self.miscInstructionsTable.append('self.wordList.append(self.stringObs)')
 		self.miscInstructionsTable.append('self.wordList.insert(0,self.stringObs)')
 		self.miscInstructionsTable.append('if len(self.myDictionary)>0:\n\t\tself.myDictionary.popitem()')
@@ -27,7 +28,7 @@ class Table(object):
 #		for i in xrange(1,self.wordListItems):
 		for item1 in self.wordListItems:
 			self.miscInstructionsTable.append('self.myString='+item1)
-			self.miscInstructionsTable.append('try:\n\t\tself.myString=next(obj for obj in self.myDictionary if obj.startswith('+item1+'))\n\texcept:\n\t\tpass')
+#			self.miscInstructionsTable.append('try:\n\t\tself.myString=next(obj for obj in self.myDictionary if obj.startswith('+item1+'))\n\texcept:\n\t\tpass')
 			self.miscInstructionsTable.append('if '+item1+' in self.myDictionary:\n\t\tself.myString=self.myDictionary['+item1+']')
 #			self.miscInstructionsTable.append('self.myString=self.myDictionary['+self.stringObs(item1)+']')
 			for item2 in self.wordListItems:
@@ -35,8 +36,8 @@ class Table(object):
 			for i in xrange(self.NUMBERLISTLENGTH):
 				self.miscInstructionsTable.append('self.myDictionary['+item1+']='+self.stringObs('self.numberList['+str(i)+']'))
 				self.miscInstructionsTable.append('self.myDictionary['+self.stringObs('self.numberList['+str(i)+']')+']='+item1)
-		for i in xrange(0x41,(0x61+26)):
-			self.miscInstructionsTable.append('self.myString+=chr('+str(i)+')')
+#		for i in xrange(0x41,(0x61+26)):
+#			self.miscInstructionsTable.append('self.myString=chr('+str(i)+')')
 		for i in xrange(self.NUMBERLISTLENGTH):
 #			self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'len(self.numericObs)')
 			for j in xrange(self.NUMBERLISTLENGTH):
@@ -48,8 +49,8 @@ class Table(object):
 				self.miscInstructionsTable.append('r'+str(j)+'=self.numberList['+str(i)+']')
 				self.miscInstructionsTable.append('self.numberList['+str(i)+']=r'+str(j))
 		for i in xrange(self.REGISTERS):
-			self.miscInstructionsTable.append('self.myString+=chr(int(r'+str(i)+'%256))')
-			self.miscInstructionsTable.append('self.myString+=self.wordList[int(r'+str(i)+'%len(self.wordList))]')
+#			self.miscInstructionsTable.append('self.myString=chr(int(r'+str(i)+'%256))')
+			self.miscInstructionsTable.append('self.myString=self.wordList[int(r'+str(i)+'%len(self.wordList))]')
 			for j in xrange(self.REGISTERS):
 				if i!=j:
 					self.miscInstructionsTable.append('r'+str(i)+'='+'r'+str(j))

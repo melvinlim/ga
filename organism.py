@@ -2,6 +2,8 @@ from chromosome import Chromosome
 class Organism(object):
 	def __init__(self,tables,functions=None,persistentMemory=None):
 		self.chromosome=Chromosome(tables=tables,functions=functions,persistentMemory=persistentMemory)
+	def getMem(self):
+			return self.chromosome.myDictionary
 	def peek(self,i=None):
 		if i!=None:
 			print self.chromosome.rna[i]
