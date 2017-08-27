@@ -96,7 +96,9 @@ class Chromosome(object):
 		self.numberList=[0]*self.tables.NUMBERLISTLENGTH
 		try:
 			#self.numberList[0]=self.go(self)
+			self.f0(self)
 			self.go(self)
+			self.f1(self)
 			try:
 				for i in xrange(len(self.numberList)):
 					self.numberList[i]=float(self.numberList[i])

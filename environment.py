@@ -61,12 +61,12 @@ class Environment(object):
 		return Organism(tables=self.table,functions=c)
 	def status(self):
 		print self.rankings[-1]
-		best=self.rankings[-1][1]
+		self.best=self.rankings[-1][1]
 		i=1
 		for ex in self.recentExamples:
 			[obs,des]=ex
 			print str(i)+'. resp:',
-			print best.step([obs,self.wordList])
+			print self.best.step([obs,self.wordList])
 			print str(i)+'. desi:',
 			print des
 			i+=1
