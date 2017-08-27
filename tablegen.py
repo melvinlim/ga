@@ -1,13 +1,23 @@
 import time
 
 class Table(object):
+	def initWordListItems(self):
+		self.wordListItems=[]
+		for i in xrange(self.REGISTERS):
+			self.wordListItems.append('self.wordList[int(r'+str(i)+'%len(self.wordList))]')
 	def __init__(self):
 		self.MYLISTLENGTH=4
 		self.REGISTERS=4	#number of registers.
 #		OBSERVATIONS=3	#length of observation vector.
 		#operators=['+=','-=','*=','/=']
 		operators=['+=','-=','*=']
+		self.initWordListItems()
 		self.miscInstructionsTable=[]
+#		for i in range(1,self.wordListItems):
+		for item1 in self.wordListItems:
+			self.miscInstructionsTable.append('self.myString='+item1)
+			for item2 in self.wordListItems:
+				self.miscInstructionsTable.append('self.myDictionary["'+item1+'"]='+item2)
 		for i in xrange(0x41,(0x61+26)):
 			self.miscInstructionsTable.append('self.myString+=chr('+str(i)+')')
 		for i in xrange(self.MYLISTLENGTH):
