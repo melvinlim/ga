@@ -19,9 +19,14 @@ class Table(object):
 		operators=['+=','-=','*=']
 		self.initWordListItems()
 		self.miscInstructionsTable=[]
+		self.miscInstructionsTable.append('self.wordList.append(self.stringObs)')
+		self.miscInstructionsTable.append('self.wordList.insert(0,self.stringObs)')
+		#self.miscInstructionsTable.append('for word in self.stringObs:\n\t\tself.wordList.append(word)')
+		#self.miscInstructionsTable.append('for word in self.stringObs:\n\t\tself.wordList.insert(0,word)')
 #		for i in xrange(1,self.wordListItems):
 		for item1 in self.wordListItems:
 			self.miscInstructionsTable.append('self.myString='+item1)
+			self.miscInstructionsTable.append('try:\n\t\tself.myString=next(obj for obj in self.myDictionary if obj.startswith('+item1+'))\n\texcept:\n\t\tpass')
 			self.miscInstructionsTable.append('if '+item1+' in self.myDictionary:\n\t\tself.myString=self.myDictionary['+item1+']')
 #			self.miscInstructionsTable.append('self.myString=self.myDictionary['+self.stringObs(item1)+']')
 			for item2 in self.wordListItems:
