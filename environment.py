@@ -80,7 +80,7 @@ class Environment(object):
 		x=a.chromosome.functions
 		y=b.chromosome.functions
 		c=self.crossDNA(x,y)
-		newDict=crossDicts(x,y)
+		newDict=crossDicts(a.chromosome.myDictionary,b.chromosome.myDictionary)
 		return Organism(tables=self.table,functions=c,persistentMemory=newDict)
 	def status(self):
 		print self.rankings[-1]

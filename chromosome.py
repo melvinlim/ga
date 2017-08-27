@@ -99,7 +99,6 @@ class Chromosome(object):
 		self.numberList=[0]*self.tables.NUMBERLISTLENGTH
 #		self.myDictionary.clear()
 		try:
-			#self.numberList[0]=self.go(self)
 			self.f0(self)
 			self.go(self)
 			self.f1(self)
