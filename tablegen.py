@@ -5,6 +5,8 @@ class Table(object):
 		self.wordListItems=[]
 		for i in xrange(self.REGISTERS):
 			self.wordListItems.append('self.wordList[int(r'+str(i)+'%len(self.wordList))]')
+		for j in xrange(self.MYLISTLENGTH):
+			self.wordListItems.append('self.wordList[int(self.myList['+str(j)+']%len(self.wordList))]')
 	def __init__(self):
 		self.MYLISTLENGTH=4
 		self.REGISTERS=4	#number of registers.
@@ -26,7 +28,6 @@ class Table(object):
 				self.miscInstructionsTable.append('self.myList['+str(i)+']='+'self.obs[int(self.myList['+str(j)+']%len(self.obs))]')
 				if i!=j:
 					self.miscInstructionsTable.append('self.myList['+str(i)+']='+'self.myList['+str(j)+']')
-					self.miscInstructionsTable.append('r'+str(i)+'='+'r'+str(j))
 			for j in xrange(self.REGISTERS):
 				self.miscInstructionsTable.append('r'+str(j)+'=self.myList['+str(i)+']')
 				self.miscInstructionsTable.append('self.myList['+str(i)+']=r'+str(j))
@@ -34,6 +35,8 @@ class Table(object):
 			self.miscInstructionsTable.append('self.myString+=chr(int(r'+str(i)+'%256))')
 			self.miscInstructionsTable.append('self.myString+=self.wordList[int(r'+str(i)+'%len(self.wordList))]')
 			for j in xrange(self.REGISTERS):
+				if i!=j:
+					self.miscInstructionsTable.append('r'+str(i)+'='+'r'+str(j))
 				self.miscInstructionsTable.append('r'+str(i)+'='+'self.obs[int(r'+str(j)+'%len(self.obs))]')
 				for operator in operators:
 					self.miscInstructionsTable.append('r'+str(i)+operator+'r'+str(j))
