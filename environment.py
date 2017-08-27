@@ -64,9 +64,9 @@ class Environment(object):
 		self.best=self.rankings[-1][1]
 		i=1
 		for ex in self.recentExamples:
-			[numericalObs,des]=ex
+			[numericObs,stringObs,des]=ex
 			print str(i)+'. resp:',
-			print self.best.step([numericalObs,self.wordList])
+			print self.best.step([numericObs,stringObs,self.wordList])
 			print str(i)+'. desi:',
 			print des
 			i+=1
@@ -149,14 +149,18 @@ class Environment(object):
 			self.organisms[x]=self.crossOrganisms(self.organisms[y],self.organisms[z])
 			self.organisms[x].assign(self.MAXFITNESS)
 	def genExample(self):
-		numericalObs=[]
-		numericalObsTargetLen=5
-		for i in xrange(numericalObsTargetLen):
-			numericalObs.append(random.randint(0,1000))
-		desired_numerical_response=self.genNumericProb(numericalObs)
-		desired_string_response=self.genStringProb(numericalObs)
+		numericObs=[]
+		numericObsTargetLen=5
+		for i in xrange(numericObsTargetLen):
+			numericObs.append(random.randint(0,1000))
+		desired_numerical_response=self.genNumericProb(numericObs)
+		desired_string_response=self.genStringProb(numericObs)
+		if desired_string_response=='hi':
+			stringObs='Hello.'
+		else:
+			stringObs='...'
 		target=[desired_numerical_response,desired_string_response]
-		return [numericalObs,target]
+		return [numericObs,stringObs,target]
 	def genExamples(self,n):
 		examples=[]
 		for i in xrange(n):
@@ -172,9 +176,9 @@ class Environment(object):
 			fitness=0
 
 			for example in self.recentExamples:
-				[numericalObs,target]=example
+				[numericObs,stringObs,target]=example
 
-				total_response=organism.step([numericalObs,self.wordList])
+				total_response=organism.step([numericObs,stringObs,self.wordList])
 				if total_response[0]==None:
 					self.organisms[i]=Organism(tables=self.table)
 					self.organisms[i].assign(self.MAXFITNESS)
