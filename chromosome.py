@@ -6,8 +6,11 @@ DEBUG=True
 #DEBUG=False
 class Chromosome(object):
 	random.seed(time.time())
-	def __init__(self,tables,functions=None,functionLength=10):
-		self.myDictionary={}
+	def __init__(self,tables,functions=None,functionLength=10,persistentMemory=None):
+		if persistentMemory:
+			self.myDictionary=persistentMemory
+		else:
+			self.myDictionary={}
 		self.tables=tables
 		self.functionLength=functionLength
 		self.numberList=[None]*self.tables.NUMBERLISTLENGTH
@@ -94,7 +97,7 @@ class Chromosome(object):
 		[self.numericObs,self.stringObs,self.wordList]=allObs
 		self.myString=''
 		self.numberList=[0]*self.tables.NUMBERLISTLENGTH
-		self.myDictionary.clear()
+#		self.myDictionary.clear()
 		try:
 			#self.numberList[0]=self.go(self)
 			self.f0(self)
