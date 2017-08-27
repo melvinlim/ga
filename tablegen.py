@@ -5,10 +5,10 @@ class Table(object):
 		self.wordListItems=[]
 		for i in xrange(self.REGISTERS):
 			self.wordListItems.append('self.wordList[int(r'+str(i)+'%len(self.wordList))]')
-		for j in xrange(self.MYLISTLENGTH):
-			self.wordListItems.append('self.wordList[int(self.myList['+str(j)+']%len(self.wordList))]')
+		for j in xrange(self.NUMBERLISTLENGTH):
+			self.wordListItems.append('self.wordList[int(self.numberList['+str(j)+']%len(self.wordList))]')
 	def __init__(self):
-		self.MYLISTLENGTH=4
+		self.NUMBERLISTLENGTH=4
 		self.REGISTERS=4	#number of registers.
 #		OBSERVATIONS=3	#length of observation vector.
 		#operators=['+=','-=','*=','/=']
@@ -22,15 +22,15 @@ class Table(object):
 				self.miscInstructionsTable.append('self.myDictionary["'+item1+'"]='+item2)
 		for i in xrange(0x41,(0x61+26)):
 			self.miscInstructionsTable.append('self.myString+=chr('+str(i)+')')
-		for i in xrange(self.MYLISTLENGTH):
-			self.miscInstructionsTable.append('self.myList['+str(i)+']='+'len(self.obs)')
-			for j in xrange(self.MYLISTLENGTH):
-				self.miscInstructionsTable.append('self.myList['+str(i)+']='+'self.obs[int(self.myList['+str(j)+']%len(self.obs))]')
+		for i in xrange(self.NUMBERLISTLENGTH):
+			self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'len(self.obs)')
+			for j in xrange(self.NUMBERLISTLENGTH):
+				self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'self.obs[int(self.numberList['+str(j)+']%len(self.obs))]')
 				if i!=j:
-					self.miscInstructionsTable.append('self.myList['+str(i)+']='+'self.myList['+str(j)+']')
+					self.miscInstructionsTable.append('self.numberList['+str(i)+']='+'self.numberList['+str(j)+']')
 			for j in xrange(self.REGISTERS):
-				self.miscInstructionsTable.append('r'+str(j)+'=self.myList['+str(i)+']')
-				self.miscInstructionsTable.append('self.myList['+str(i)+']=r'+str(j))
+				self.miscInstructionsTable.append('r'+str(j)+'=self.numberList['+str(i)+']')
+				self.miscInstructionsTable.append('self.numberList['+str(i)+']=r'+str(j))
 		for i in xrange(self.REGISTERS):
 			self.miscInstructionsTable.append('self.myString+=chr(int(r'+str(i)+'%256))')
 			self.miscInstructionsTable.append('self.myString+=self.wordList[int(r'+str(i)+'%len(self.wordList))]')
@@ -40,7 +40,7 @@ class Table(object):
 				self.miscInstructionsTable.append('r'+str(i)+'='+'self.obs[int(r'+str(j)+'%len(self.obs))]')
 				for operator in operators:
 					self.miscInstructionsTable.append('r'+str(i)+operator+'r'+str(j))
-					self.miscInstructionsTable.append('self.myList['+str(i)+']'+operator+'self.myList['+str(j)+']')
+					self.miscInstructionsTable.append('self.numberList['+str(i)+']'+operator+'self.numberList['+str(j)+']')
 		self.FUNCTIONPREFIX='\t'
 		for i in xrange(self.REGISTERS):
 			self.FUNCTIONPREFIX+='r'+str(i)+'='
@@ -72,11 +72,11 @@ class Table(object):
 		#print self.MAINPREFIX
 		condOpers=['<','>','<=','>=','==','!=']
 		conditions=[]
-		for i in xrange(self.MYLISTLENGTH):
-			for j in xrange(self.MYLISTLENGTH):
+		for i in xrange(self.NUMBERLISTLENGTH):
+			for j in xrange(self.NUMBERLISTLENGTH):
 				if i!=j:
 					for condOp in condOpers:
-						conditions.append('self.myList['+str(i)+']'+condOp+'self.myList['+str(j)+']')
+						conditions.append('self.numberList['+str(i)+']'+condOp+'self.numberList['+str(j)+']')
 
 		#assert(False)
 		self.FUNCTIONS=2
@@ -91,9 +91,9 @@ class Table(object):
 				#self.mainInstructionsTable.append('r'+str(j)+'=self.'+self.functionNames[i]+'(self)')
 			for cond in conditions:
 				self.mainInstructionsTable.append('if '+cond+':\n\t\t'+'self.'+self.functionNames[i]+'(self)')
-				#for j in xrange(self.MYLISTLENGTH):
-					#self.mainInstructionsTable.append('if '+cond+':\n\t\tself.myList['+str(j)+']'+'=self.'+self.functionNames[i]+'(self)')
-#					print('if '+cond+'\n\tself.myList['+str(j)+']'+'=self.'+self.functionNames[i]+'(self)')
+				#for j in xrange(self.NUMBERLISTLENGTH):
+					#self.mainInstructionsTable.append('if '+cond+':\n\t\tself.numberList['+str(j)+']'+'=self.'+self.functionNames[i]+'(self)')
+#					print('if '+cond+'\n\tself.numberList['+str(j)+']'+'=self.'+self.functionNames[i]+'(self)')
 		self.mainInstructionsTable+=self.miscInstructionsTable
 		self.MISCITLENGTH=len(self.miscInstructionsTable)
 		self.MAINITLENGTH=len(self.mainInstructionsTable)

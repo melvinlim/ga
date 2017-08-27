@@ -10,7 +10,7 @@ class Chromosome(object):
 		self.myDictionary={}
 		self.tables=tables
 		self.functionLength=functionLength
-		self.myList=[None]*self.tables.MYLISTLENGTH
+		self.numberList=[None]*self.tables.NUMBERLISTLENGTH
 		if functions==None:
 			self.generateFunctionDict()
 		else:
@@ -93,21 +93,21 @@ class Chromosome(object):
 	def execute(self,obs):
 		[self.obs,self.wordList]=obs
 		self.myString=''
-		self.myList=[0]*self.tables.MYLISTLENGTH
+		self.numberList=[0]*self.tables.NUMBERLISTLENGTH
 		try:
-			#self.myList[0]=self.go(self)
+			#self.numberList[0]=self.go(self)
 			self.go(self)
 			try:
-				for i in xrange(len(self.myList)):
-					self.myList[i]=float(self.myList[i])
+				for i in xrange(len(self.numberList)):
+					self.numberList[i]=float(self.numberList[i])
 			except:
 				if DEBUG:
 					print 'huge number was assigned to something'
-				self.myList=None
+				self.numberList=None
 		except:
 			if DEBUG:
 				print self.rna
 				print "Unexpected error:", sys.exc_info()
 				time.sleep(1)
-			self.myList=None
-		return [self.myList,self.myString]
+			self.numberList=None
+		return [self.numberList,self.myString]
