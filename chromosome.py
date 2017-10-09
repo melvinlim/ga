@@ -10,7 +10,8 @@ class Chromosome(object):
 		if persistentMemory:
 			self.myDictionary=persistentMemory
 		else:
-			self.myDictionary={}
+#			self.myDictionary={}
+			self.myDictionary=[]
 		self.tables=tables
 		self.functionLength=functionLength
 		self.numberList=[None]*self.tables.NUMBERLISTLENGTH
@@ -93,8 +94,27 @@ class Chromosome(object):
 		self.rna.append(ans)
 		self.rnaLength=totalInstructionLength
 		self.rnaLength+=len(self.myDictionary)
+	def NListToString(self,a,a0):
+		ret=''
+		if a:
+			for x in a[a0:]:
+				ret+=chr(int(x)%256)
+		return ret
+	def stringToNList(self,obs):
+		val=[]
+		for l in obs:
+			val.append(ord(l))
+		return val
 	def execute(self,allObs):
 		[self.numericObs,self.stringObs,self.wordList]=allObs
+		#print self.numericObs,self.stringObs
+		#self.numericLen=len(self.numericObs)
+		self.numericLen=2
+		numberRep=self.stringToNList(self.stringObs)
+		self.numericObs+=numberRep
+		self.stringObs=''
+		#print self.numericObs,self.stringObs
+		#assert False
 		self.myString=''
 		self.numberList=[0]*self.tables.NUMBERLISTLENGTH
 #		self.myDictionary.clear()
@@ -115,4 +135,5 @@ class Chromosome(object):
 				print "Unexpected error:", sys.exc_info()
 				time.sleep(1)
 			self.numberList=None
+		self.myString=self.NListToString(self.numberList,self.numericLen)
 		return [self.numberList,self.myString]

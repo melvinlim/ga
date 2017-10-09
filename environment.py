@@ -7,6 +7,22 @@ def heads():
 	if randint(0,1):
 		return True
 	return False
+def crossLists(x,y):
+	xt=randint(0,len(x))
+	yt=randint(0,len(y))
+	LIMIT=3
+	if xt>LIMIT:
+		xt=LIMIT
+	if yt>LIMIT:
+		yt=LIMIT
+	xinds=random.sample(xrange(0,len(x)),xt)
+	yinds=random.sample(xrange(0,len(y)),yt)
+	c=[]
+	for i in xinds:
+		c.append(x[i])
+	for i in yinds:
+		c.append(y[i])
+	return c
 def crossDicts(x,y):
 	xt=randint(0,len(x))
 	yt=randint(0,len(y))
@@ -85,7 +101,8 @@ class Environment(object):
 		x=a.chromosome.functions
 		y=b.chromosome.functions
 		c=self.crossDNA(x,y)
-		newDict=crossDicts(a.chromosome.myDictionary,b.chromosome.myDictionary)
+		newDict=crossLists(a.chromosome.myDictionary,b.chromosome.myDictionary)
+		#newDict=crossDicts(a.chromosome.myDictionary,b.chromosome.myDictionary)
 		return Organism(tables=self.table,functions=c,persistentMemory=newDict)
 	def status(self):
 		print self.rankings[-1]
