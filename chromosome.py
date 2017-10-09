@@ -107,6 +107,7 @@ class Chromosome(object):
 		return val
 	def execute(self,allObs):
 		[self.numericObs,self.stringObs,self.wordList]=allObs
+#		print self.wordList
 		#print self.numericObs,self.stringObs
 		#self.numericLen=len(self.numericObs)
 		self.numericLen=2
@@ -131,7 +132,8 @@ class Chromosome(object):
 				self.numberList=None
 		except:
 			if DEBUG:
-				print self.rna
+				for ins in self.rna:
+					print ins
 				print "Unexpected error:", sys.exc_info()
 				time.sleep(1)
 			self.numberList=None

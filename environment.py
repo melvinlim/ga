@@ -69,6 +69,11 @@ def crossDNA(x,y):
 		result['input'][key]=crossInstructions(x['input'][key],y['input'][key])
 	return result
 class Environment(object):
+	def wordToNumbers(self,w):
+		ret=[]
+		for l in w:
+			ret.append(ord(l))
+		return ret
 	def initWordList(self):
 #		try:
 #			fp=open('/usr/share/dict/words','r')
@@ -76,8 +81,10 @@ class Environment(object):
 #			self.wordList.append('42')
 #		except:
 			self.wordList=[]
-			self.wordList.append('nothing')
-			self.wordList.append('42')
+			self.wordList.append(self.wordToNumbers('nothing'))
+			self.wordList.append(self.wordToNumbers('42'))
+			#self.wordList.append('nothing')
+			#self.wordList.append('42')
 	def __init__(self,capacity,replacements,maxfitness,evalsPerTimeStep=1):
 		self.evalsPerTimeStep=evalsPerTimeStep
 		self.CAPACITY=capacity
